@@ -111,19 +111,16 @@ p{margin:0}
 .art{position:relative}
 .art .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:var(--ash)}
 
-.js .art .ph{opacity:0;transition:opacity .5s ease}
-.js .art.done .ph{opacity:1;animation:kb 16s ease-in-out infinite alternate}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09) translate3d(-1.2%,-.8%,0)}}
-.art .tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);gap:0;z-index:1;pointer-events:none;transition:gap .7s var(--ease) .15s}
-.art .tiles i{display:block;background-repeat:no-repeat;background-size:600% 400%;opacity:0;transform:translateY(-34px) scale(.82) rotate(-2deg);box-shadow:0 14px 22px -10px rgba(11,18,32,.55)}
-.art.live .tiles i{animation:lay .62s var(--ease) both;animation-delay:calc(var(--k)*70ms)}
-@keyframes lay{0%{opacity:0;transform:translateY(-34px) scale(.82) rotate(-2deg)}55%{opacity:1;transform:translateY(3px) scale(1.01) rotate(0)}100%{opacity:1;transform:none;box-shadow:0 0 0 rgba(11,18,32,0)}}
-.art.live:not(.done) .tiles{gap:3px}
-.art.done .tiles{display:none}
+.art{--mx:50%;--my:50%;--rx:0deg;--ry:0deg;--px:0px;--py:0px;--sy:0px;transform:perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .35s cubic-bezier(.22,1,.36,1);will-change:transform;touch-action:pan-y}
+.js .art .ph{opacity:0;clip-path:inset(14% 14% 14% 14%);transform:translate3d(0,0,0) scale(1.22);transition:clip-path 1.3s cubic-bezier(.22,1,.36,1),transform 1.7s cubic-bezier(.22,1,.36,1),opacity .7s ease;will-change:transform,clip-path}
+.js .art.live .ph{opacity:1;clip-path:inset(0 0 0 0);transform:translate3d(var(--px),calc(var(--py) + var(--sy)),0) scale(1.1)}
+.js .art.done .ph{transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.art::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .4s ease;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.26),transparent 60%)}
+.art.hot::before{opacity:1}
 .art::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.3) 50%,transparent 62%);transform:translateX(-120%)}
-.art.done::after{animation:shine 1.3s ease-out 1 both}
+.art.live::after{animation:shine 1.5s .5s cubic-bezier(.4,0,.2,1) 1 both}
 @keyframes shine{to{transform:translateX(120%)}}
-@media (prefers-reduced-motion:reduce){.js .art .ph{opacity:1}.art .tiles{display:none}.js .art.done .ph{animation:none}.art.done::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.art{transform:none!important}.js .art .ph{opacity:1;clip-path:none;transform:none!important;transition:none}.art::before,.art::after{display:none}}
 .art .ex{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(11,18,32,.72);padding:5px 8px}
 .photo-note{font-size:13.5px;color:var(--muted);max-width:60ch;margin-top:8px}
 .credits{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.6;padding-block:0 26px;max-width:90ch}
@@ -687,23 +684,24 @@ $('#qCopy').addEventListener('click',()=>copy($('#qText').textContent,'Request c
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px 12% 0px'});
 document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 const reduceM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-function layArt(a){
-  const img=a.querySelector('.ph');if(!img){a.classList.add('done');return}
-  if(reduceM){a.classList.add('done');return}
-  const T=document.createElement('div');T.className='tiles';
-  const C=6,R=4,tiles=[];
-  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const i=document.createElement('i');
-    i.style.backgroundImage='url("'+img.currentSrc+'")';
-    i.style.backgroundPosition=(c/(C-1)*100)+'% '+(r/(R-1)*100)+'%';
-    i.style.setProperty('--k',(c+r)+Math.random()*1.6);tiles.push(i);T.appendChild(i)}
-  a.appendChild(T);a.classList.add('live');
-  const total=(C+R-2+1.6)*70+700;
-  setTimeout(()=>{a.classList.add('done')},total+250);
+const arts=[...document.querySelectorAll('.art')];
+const artIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){artIO.unobserve(e.target);const a=e.target,im=a.querySelector('.ph');
+  const go=()=>{a.classList.add('live');setTimeout(()=>a.classList.add('done'),1800)};
+  if(!im||im.complete)go();else{im.addEventListener('load',go,{once:true});im.addEventListener('error',()=>a.classList.add('done'),{once:true})}}}),{threshold:.2});
+arts.forEach(a=>artIO.observe(a));
+if(!reduceM){
+  arts.forEach(a=>{
+    const set=(k,v)=>a.style.setProperty(k,v);
+    const move=e=>{const r=a.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      set('--mx',x*100+'%');set('--my',y*100+'%');set('--rx',((.5-y)*6).toFixed(2)+'deg');set('--ry',((x-.5)*8).toFixed(2)+'deg');
+      set('--px',((.5-x)*18).toFixed(1)+'px');set('--py',((.5-y)*12).toFixed(1)+'px');a.classList.add('hot')};
+    const leave=()=>{set('--rx','0deg');set('--ry','0deg');set('--px','0px');set('--py','0px');a.classList.remove('hot')};
+    a.addEventListener('pointermove',move);a.addEventListener('pointerleave',leave);a.addEventListener('pointercancel',leave);a.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')leave()});
+  });
+  let tk=false;const par=()=>{tk=false;const h=innerHeight;arts.forEach(a=>{if(!a.classList.contains('live'))return;const r=a.getBoundingClientRect();if(r.bottom<0||r.top>h)return;
+    a.style.setProperty('--sy',(((r.top+r.height/2)-h/2)/h*-26).toFixed(1)+'px')})};
+  addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(par)}},{passive:true});
 }
-const artIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){artIO.unobserve(e.target);const im=e.target.querySelector('.ph');
-  const go=()=>layArt(e.target);
-  if(!im||im.complete)go();else{im.addEventListener('load',go,{once:true});im.addEventListener('error',()=>e.target.classList.add('done'),{once:true})}}}),{threshold:.25});
-document.querySelectorAll('.art').forEach(a=>artIO.observe(a));
 
 const nav=$('#nav'),cbar=document.querySelector('.callbar');addEventListener('scroll',()=>{nav.classList.toggle('solid',scrollY>20);if(cbar)cbar.classList.toggle('show',scrollY>420)},{passive:true});
 const heroSvg=document.querySelector('.hero-art svg');

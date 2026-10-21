@@ -203,11 +203,12 @@ textarea{min-height:110px;resize:vertical}
 .splash{position:fixed;inset:0;z-index:100;place-items:center;background:var(--paper);overflow:hidden;will-change:transform;box-shadow:0 40px 80px -30px rgba(11,18,32,.35);cursor:pointer}
 .splash::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--sapphire) 0 50%,var(--turf) 50% 100%)}
 .rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
-.slogo{display:block;width:100%;height:auto;overflow:visible}
+.slogo{display:block;width:100%;height:auto;overflow:visible;transform-origin:0 0;will-change:transform}
 .slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
-.arm{position:absolute;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) / 2 - var(--lw) * 1.1 * 48 / 700);top:calc(var(--lw) * 6 / 230 - var(--lw) * 1.1 * 660 / 700);overflow:visible;pointer-events:none}
-.arm .boom{transform-box:view-box;transform-origin:760px -60px;will-change:transform}
+.arm{position:absolute;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) / 2 - var(--lw) * 1.1 * 83 / 700);top:calc(var(--lw) * 62 / 230 + var(--lw) * 0.16 - var(--lw) * 1.1 * 490 / 700);overflow:visible;pointer-events:none}
+.arm .boom{transform-box:view-box;transform-origin:1400px -380px;will-change:transform}
 .arm .bucket{transform-box:view-box;transform-origin:150px 520px}
+.arm .payload{opacity:0}
 .skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -227,10 +228,16 @@ textarea{min-height:110px;resize:vertical}
       <rect class="s" id="sB" x="118" y="47" width="104" height="3" fill="#2E9E55"/>
       <text class="sub" id="sSub" x="115" y="60" text-anchor="middle" fill="#5A6476" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="5.2">LANDSCAPING</text>
     </svg>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wm" viewBox="0 0 230 62">
+      <path d="M6 22 L115 5 L224 22" fill="none" stroke="#1F4FE0" stroke-width="5" stroke-linecap="square"/>
+      <text x="115" y="42" text-anchor="middle" fill="#0B1220" font-family="Archivo, Arial Black, sans-serif" font-weight="900" font-size="25" style="font-stretch:125%" textLength="214" lengthAdjust="spacingAndGlyphs">CLEARPATH</text>
+      <rect x="8" y="47" width="104" height="3" fill="#1F4FE0"/><rect x="118" y="47" width="104" height="3" fill="#2E9E55"/>
+      <text x="115" y="60" text-anchor="middle" fill="#5A6476" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="5.2">LANDSCAPING</text>
+    </symbol></svg>
     <svg class="arm" viewBox="0 0 700 700">
       <g class="boom" id="boom">
-        <path d="M330 250 Q470 70 780 -80" fill="none" stroke="#0B1220" stroke-width="50" stroke-linecap="round"/>
-        <path d="M352 236 Q480 80 770 -60" fill="none" stroke="#1C2638" stroke-width="10" stroke-linecap="round"/>
+        <path d="M330 250 Q470 70 780 -80 L1400 -380" fill="none" stroke="#0B1220" stroke-width="50" stroke-linecap="round"/>
+        <path d="M352 236 Q480 80 770 -60 L1390 -360" fill="none" stroke="#1C2638" stroke-width="10" stroke-linecap="round"/>
         <line x1="430" y1="232" x2="640" y2="70" stroke="#1F4FE0" stroke-width="16" stroke-linecap="round"/>
         <line x1="430" y1="232" x2="520" y2="163" stroke="#C9CED6" stroke-width="7" stroke-linecap="round"/>
         <path d="M330 250 L150 520" fill="none" stroke="#0B1220" stroke-width="34" stroke-linecap="round"/>
@@ -242,6 +249,8 @@ textarea{min-height:110px;resize:vertical}
         <circle cx="330" cy="250" r="15" fill="#2A3549"/><circle cx="330" cy="250" r="6" fill="#C9CED6"/>
         <g class="bucket" id="bucket">
           <line x1="150" y1="474" x2="124" y2="505" stroke="#0B1220" stroke-width="11" stroke-linecap="round"/>
+          <!-- the logo rides inside the bucket; counter-rotated so it sits level when the bucket is cupped -->
+          <g transform="rotate(-60 150 520)"><use class="payload" id="payload" href="#wm" x="18" y="474.5" width="130" height="35"/></g>
           <!-- side plate: curved back, wear strips, cutting lip -->
           <path d="M116 494 L176 504 C202 548 194 610 146 640 C116 658 82 664 56 656 L66 632 C88 604 100 560 116 494 Z" fill="#1B2333"/>
           <path d="M176 504 C202 548 194 610 146 640 C116 658 82 664 56 656" fill="none" stroke="#2E3A50" stroke-width="6"/>
@@ -616,24 +625,41 @@ else{
   try{sessionStorage.setItem('cpIntro','1')}catch(e){}
   const A=[],E='cubic-bezier(.22,.8,.2,1)';
   const an=(el,kf,o)=>{const x=el.animate(kf,Object.assign({fill:'both'},o));A.push(x);return x};
-  const chev=$('#sChev'),L=chev.getTotalLength();chev.style.strokeDasharray=L;
-  an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:480,easing:'cubic-bezier(.65,0,.35,1)'});
-  an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:120,duration:450,easing:E});
-  an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:260,duration:380,easing:E});
-  an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:300,duration:380,easing:E});
-  an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:340,duration:420,easing:E});
-  // excavator swings in from the top, bucket settles onto the roofline
-  an($('#boom'),[{transform:'rotate(50deg)'},{transform:'rotate(-1deg)',offset:.85},{transform:'rotate(0deg)'}],{delay:420,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
-  an($('#bucket'),[{transform:'rotate(16deg)'},{transform:'rotate(0deg)',offset:.72},{transform:'rotate(-8deg)'}],{delay:420,duration:820,easing:'cubic-bezier(.45,0,.2,1)'});
-  // grip: logo lifts a touch as the bucket curls
-  an($('#rig'),[{transform:'translateY(0)'},{transform:'translateY(-8px)'}],{delay:1080,duration:180,easing:'cubic-bezier(.3,0,.2,1)'});
-  // the whole sheet is lifted away, revealing the site
-  const lift=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{delay:1220,duration:720,easing:'cubic-bezier(.7,0,.22,1)'});
-  let revealed=false;
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  const slogo=document.querySelector('.slogo'),payload=$('#payload'),boom=$('#boom'),bucket=$('#bucket');
+  let revealed=false,done=false;
   const reveal=()=>{if(revealed)return;revealed=true;root.classList.remove('splashing');startTurf()};
-  const t=setTimeout(reveal,1260);
-  lift.finished.then(()=>{reveal();splash.remove()}).catch(()=>{});
-  splash.addEventListener('click',()=>{clearTimeout(t);A.forEach(x=>{try{x.finish()}catch(e){}})});
+  const lift=(ms)=>{const x=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{duration:ms,easing:'cubic-bezier(.7,0,.22,1)'});setTimeout(reveal,40);x.finished.then(()=>splash.remove()).catch(()=>{});return x};
+  splash.addEventListener('click',()=>{if(done)return;done=true;A.forEach(x=>{try{x.pause()}catch(e){}});lift(380)});
+  (async()=>{
+    // 1. logo draws in
+    const chev=$('#sChev'),L=chev.getTotalLength();chev.style.strokeDasharray=L;
+    an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:460,easing:'cubic-bezier(.65,0,.35,1)'});
+    an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:100,duration:430,easing:E});
+    an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:240,duration:360,easing:E});
+    an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:280,duration:360,easing:E});
+    an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:320,duration:400,easing:E});
+    // 2. excavator swings in below the logo, bucket curling up into a cup
+    const swing=an(boom,[{transform:'rotate(26deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{delay:380,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
+    an(bucket,[{transform:'rotate(-10deg)'},{transform:'rotate(60deg)'}],{delay:380,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
+    await swing.finished; if(done)return;
+    // 3. logo shrinks and drops into the bucket
+    const fr=slogo.getBoundingClientRect(),to=payload.getBoundingClientRect();
+    const k=to.width/fr.width,dx=to.left-fr.left,dy=to.top-fr.top;
+    const drop=an(slogo,[
+      {transform:'translate(0px,0px) scale(1)'},
+      {transform:`translate(${dx}px,${dy-to.height*1.4}px) scale(${k})`,offset:.62,easing:'cubic-bezier(.5,0,.9,.5)'},
+      {transform:`translate(${dx}px,${dy}px) scale(${k})`}
+    ],{duration:440,easing:'cubic-bezier(.3,0,.25,1)'});
+    await drop.finished; if(done)return;
+    payload.style.opacity='1';slogo.style.visibility='hidden';
+    // 4. bucket rocks back to hold it, boom starts to lift
+    an(bucket,[{transform:'rotate(60deg)'},{transform:'rotate(70deg)'}],{duration:220,easing:'cubic-bezier(.3,0,.2,1)'});
+    an(boom,[{transform:'rotate(0deg)'},{transform:'rotate(-3deg)'}],{duration:300,easing:'cubic-bezier(.3,0,.2,1)'});
+    await wait(140); if(done)return;
+    // 5. everything is lifted away, revealing the site
+    done=true;lift(700);
+  })();
 }
 })();
 </script>

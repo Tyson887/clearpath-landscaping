@@ -194,12 +194,61 @@ textarea{min-height:110px;resize:vertical}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 .js [data-r].in{animation:fade .8s var(--ease) both;animation-delay:var(--d,0s)}
+
+/* intro: logo, excavator lifts the sheet away */
+.splash{display:none}
+.splashing{overflow:hidden}
+.splashing .splash{display:grid}
+.splashing .ln>span,.splashing .hero-side{animation-play-state:paused}
+.splash{position:fixed;inset:0;z-index:100;place-items:center;background:var(--paper);overflow:hidden;will-change:transform;box-shadow:0 40px 80px -30px rgba(11,18,32,.35);cursor:pointer}
+.splash::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--sapphire) 0 50%,var(--turf) 50% 100%)}
+.rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
+.slogo{display:block;width:100%;height:auto;overflow:visible}
+.slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
+.arm{position:absolute;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) / 2 - var(--lw) * 1.1 * 60 / 700);top:calc(var(--lw) * 6 / 230 - var(--lw) * 1.1 * 646 / 700);overflow:visible;pointer-events:none}
+.arm .boom{transform-box:view-box;transform-origin:760px -60px;will-change:transform}
+.arm .bucket{transform-box:view-box;transform-origin:150px 520px}
+.skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
+<script>
+(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&sessionStorage.getItem('cpIntro')!=='1'&&Element.prototype.animate)document.documentElement.classList.add('splashing')}catch(e){}})();
+</script>
 
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="rig" id="rig">
+    <svg class="slogo" viewBox="0 0 230 62">
+      <path id="sChev" d="M6 22 L115 5 L224 22" fill="none" stroke="#1F4FE0" stroke-width="5" stroke-linecap="square"/>
+      <text class="t" id="sText" x="115" y="42" text-anchor="middle" fill="#0B1220" font-family="Archivo, Arial Black, sans-serif" font-weight="900" font-size="25" style="font-stretch:125%" textLength="214" lengthAdjust="spacingAndGlyphs">CLEARPATH</text>
+      <rect class="s" id="sA" x="8" y="47" width="104" height="3" fill="#1F4FE0"/>
+      <rect class="s" id="sB" x="118" y="47" width="104" height="3" fill="#2E9E55"/>
+      <text class="sub" id="sSub" x="115" y="60" text-anchor="middle" fill="#5A6476" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="5.2">LANDSCAPING</text>
+    </svg>
+    <svg class="arm" viewBox="0 0 700 700">
+      <g class="boom" id="boom">
+        <path d="M330 250 Q470 70 780 -80" fill="none" stroke="#0B1220" stroke-width="50" stroke-linecap="round"/>
+        <path d="M352 236 Q480 80 770 -60" fill="none" stroke="#1C2638" stroke-width="10" stroke-linecap="round"/>
+        <line x1="430" y1="232" x2="640" y2="70" stroke="#1F4FE0" stroke-width="16" stroke-linecap="round"/>
+        <line x1="430" y1="232" x2="520" y2="163" stroke="#C9CED6" stroke-width="7" stroke-linecap="round"/>
+        <path d="M330 250 L150 520" fill="none" stroke="#0B1220" stroke-width="34" stroke-linecap="round"/>
+        <line x1="210" y1="470" x2="350" y2="200" stroke="#1F4FE0" stroke-width="12" stroke-linecap="round"/>
+        <line x1="210" y1="470" x2="262" y2="370" stroke="#C9CED6" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="330" cy="250" r="15" fill="#2A3549"/><circle cx="330" cy="250" r="6" fill="#C9CED6"/>
+        <g class="bucket" id="bucket">
+          <path d="M150 520 L176 552 Q160 612 92 642 L60 646 L40 616 Q34 560 96 520 Z" fill="#0B1220"/>
+          <path d="M60 646 L44 662 L52 638 Z M76 643 L64 662 L70 640 Z M92 640 L84 658 L88 638 Z" fill="#0B1220"/>
+          <path d="M70 620 Q110 600 150 556" fill="none" stroke="#2A3549" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="150" cy="520" r="11" fill="#2A3549"/><circle cx="150" cy="520" r="4" fill="#C9CED6"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <span class="skip">Tap to skip</span>
+</div>
+
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a href="#top" aria-label="ClearPath Landscaping home">
@@ -502,32 +551,76 @@ let ticking=false;
 const clipR=$('#clipR');
 function draw(cx,rad,rot){
   const end=cx-rad*0.8;
-  roll.setAttribute('transform',`translate(${cx} ${254-rad}) scale(${rad/40})`);
-  sp.setAttribute('transform',`rotate(${rot})`);
-  const w=Math.max(0,end-610);sA.setAttribute('width',w);sB.setAttribute('width',w);
-  clipR.setAttribute('width',Math.max(0,end));
+  roll.setAttribute('transform',`translate(${cx.toFixed(2)} ${(254-rad).toFixed(2)}) scale(${(rad/40).toFixed(4)})`);
+  sp.setAttribute('transform',`rotate(${rot.toFixed(2)})`);
+  const w=Math.max(0,end-610);sA.setAttribute('width',w.toFixed(2));sB.setAttribute('width',w.toFixed(2));
+  clipR.setAttribute('width',Math.max(0,end).toFixed(2));
 }
-let intro=!reduce;
-function frame(){
-  ticking=false;const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?scrollY/max:0;
+/* the roll always eases toward where scroll says it should be, so it never snaps */
+const pose={cx:822,rad:40,rot:0};
+function target(){
+  const r=art.getBoundingClientRect();
+  const q=Math.min(1,Math.max(0,(innerHeight*.75-r.top)/(r.height+innerHeight*.5)));
+  return{cx:822+q*92,rad:40-q*16};
+}
+function setPose(cx,rad){pose.rot+=(cx-pose.cx)/rad*57.2958;pose.cx=cx;pose.rad=rad;draw(pose.cx,pose.rad,pose.rot)}
+let intro=null,looping=false;
+function loop(ts){
+  const t=target();
+  if(intro&&intro.t0===null){requestAnimationFrame(loop);return}
+  if(intro){
+    const k=Math.min(1,(ts-intro.t0)/intro.dur);
+    const e=k<.5?16*k*k*k*k*k:1-Math.pow(-2*k+2,5)/2; // quint in-out: long, soft landing
+    setPose(40+(t.cx-40)*e,64+(t.rad-64)*e);
+    if(k>=1)intro=null;
+    requestAnimationFrame(loop);return;
+  }
+  const dx=t.cx-pose.cx,dr=t.rad-pose.rad;
+  if(Math.abs(dx)<.02&&Math.abs(dr)<.02){setPose(t.cx,t.rad);looping=false;return}
+  setPose(pose.cx+dx*.12,pose.rad+dr*.12);
+  requestAnimationFrame(loop);
+}
+function kick(){if(!looping&&!reduce){looping=true;requestAnimationFrame(loop)}}
+function updRail(){
+  const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?scrollY/max:0;
   const lit=Math.round(p*N+0.15);bricks.forEach((b,i)=>b.classList.toggle('on',i<lit));
-  if(reduce||intro)return;
-  const r=art.getBoundingClientRect();const q=Math.min(1,Math.max(0,(innerHeight*.75-r.top)/(r.height+innerHeight*.5)));
-  const rad=40-q*16;draw(822+q*92,rad,q*92/rad*57.3);
 }
-addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}},{passive:true});
-/* opening animation: turf roll rolls out from the left and lays the lawn */
-if(intro){
-  draw(40,64,-1080);
-  const DELAY=450,DUR=2200;let t0=null;
-  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  requestAnimationFrame(function step(ts){
-    if(t0===null)t0=ts;const t=Math.min(1,Math.max(0,(ts-t0-DELAY)/DUR));const e=ease(t);
-    draw(40+782*e,64-24*e,-(1-e)*1080);
-    if(t<1)requestAnimationFrame(step);else{intro=false;frame()}
-  });
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;updRail()})}kick()},{passive:true});
+addEventListener('resize',kick);
+updRail();
+function startTurf(){
+  if(reduce){const t=target();draw(t.cx,t.rad,0);return}
+  pose.cx=40;pose.rad=64;pose.rot=-1080;draw(40,64,-1080);
+  intro={t0:null,dur:2600};
+  setTimeout(()=>{if(intro)intro.t0=performance.now();looping=true;requestAnimationFrame(loop)},250);
 }
-frame();
+
+/* ---------- opening sequence ---------- */
+const root=document.documentElement,splash=$('#splash');
+if(!root.classList.contains('splashing')){splash.remove();startTurf();}
+else{
+  try{sessionStorage.setItem('cpIntro','1')}catch(e){}
+  const A=[],E='cubic-bezier(.22,.8,.2,1)';
+  const an=(el,kf,o)=>{const x=el.animate(kf,Object.assign({fill:'both'},o));A.push(x);return x};
+  const chev=$('#sChev'),L=chev.getTotalLength();chev.style.strokeDasharray=L;
+  an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:800,easing:'cubic-bezier(.65,0,.35,1)'});
+  an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:250,duration:750,easing:E});
+  an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:550,duration:600,easing:E});
+  an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:620,duration:600,easing:E});
+  an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:700,duration:800,easing:E});
+  // excavator swings in from the top, bucket settles onto the roofline
+  an($('#boom'),[{transform:'rotate(50deg)'},{transform:'rotate(-1.2deg)',offset:.82},{transform:'rotate(0deg)'}],{delay:1050,duration:1150,easing:'cubic-bezier(.45,0,.25,1)'});
+  an($('#bucket'),[{transform:'rotate(28deg)'},{transform:'rotate(0deg)',offset:.7},{transform:'rotate(-12deg)'}],{delay:1050,duration:1500,easing:'cubic-bezier(.45,0,.25,1)'});
+  // grip: logo lifts a touch as the bucket curls
+  an($('#rig'),[{transform:'translateY(0)'},{transform:'translateY(-8px)'}],{delay:2300,duration:350,easing:'cubic-bezier(.3,0,.2,1)'});
+  // the whole sheet is lifted away, revealing the site
+  const lift=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{delay:2600,duration:1100,easing:'cubic-bezier(.7,0,.22,1)'});
+  let revealed=false;
+  const reveal=()=>{if(revealed)return;revealed=true;root.classList.remove('splashing');startTurf()};
+  const t=setTimeout(reveal,2900);
+  lift.finished.then(()=>{reveal();splash.remove()}).catch(()=>{});
+  splash.addEventListener('click',()=>{clearTimeout(t);A.forEach(x=>{try{x.finish()}catch(e){}})});
+}
 })();
 </script>
 

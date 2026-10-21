@@ -198,7 +198,7 @@ textarea{min-height:110px;resize:vertical}
 /* intro: logo, excavator lifts the sheet away */
 .splash{display:none}
 .splashing{overflow:hidden}
-.splashing .splash{display:grid}
+.splashing .splash,.splash.live{display:grid}
 .splashing .ln>span,.splashing .hero-side{animation-play-state:paused}
 .splash{position:fixed;inset:0;z-index:100;place-items:center;background:var(--paper);overflow:hidden;will-change:transform;box-shadow:0 40px 80px -30px rgba(11,18,32,.35);cursor:pointer}
 .splash::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--sapphire) 0 50%,var(--turf) 50% 100%)}
@@ -599,6 +599,7 @@ function startTurf(){
 const root=document.documentElement,splash=$('#splash');
 if(!root.classList.contains('splashing')){splash.remove();startTurf();}
 else{
+  splash.classList.add('live');
   try{sessionStorage.setItem('cpIntro','1')}catch(e){}
   const A=[],E='cubic-bezier(.22,.8,.2,1)';
   const an=(el,kf,o)=>{const x=el.animate(kf,Object.assign({fill:'both'},o));A.push(x);return x};

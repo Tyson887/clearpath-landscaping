@@ -644,7 +644,8 @@ else{
     an(bucket,[{transform:'rotate(-10deg)'},{transform:'rotate(70deg)'}],{delay:420,duration:700,easing:'cubic-bezier(.45,0,.2,1)'});
     await swing.finished; if(done)return;
     // 3. hand the logo to the bucket (same size, same spot) so it travels with it
-    const fr=slogo.getBoundingClientRect(),to=payload.getBoundingClientRect();
+    const box=els=>els.map(e=>e.getBoundingClientRect()).reduce((m,r)=>({left:Math.min(m.left,r.left),top:Math.min(m.top,r.top)}),{left:1e9,top:1e9});
+    const fr=box(['#sChev','#sText','#sA','#sB','#sSub'].map(q=>$(q))),to=payload.getBoundingClientRect();
     const u=700/document.querySelector('.arm').getBoundingClientRect().width;
     payload.setAttribute('x',(+payload.getAttribute('x')+(fr.left-to.left)*u).toFixed(2));
     payload.setAttribute('y',(+payload.getAttribute('y')+(fr.top-to.top)*u).toFixed(2));

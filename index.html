@@ -205,7 +205,7 @@ textarea{min-height:110px;resize:vertical}
 .rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
 .slogo{position:relative;z-index:0;display:block;width:100%;height:auto;overflow:visible;transform-origin:0 0;will-change:transform}
 .slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
-.arm{position:absolute;z-index:2;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) * 1.04 - var(--lw) * 1.1 * 36 / 700);top:calc(var(--lw) * 0.33 - var(--lw) * 1.1 * 676 / 700);will-change:transform;overflow:visible;pointer-events:none}
+.arm{position:absolute;z-index:2;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) * .92 - var(--lw) * 1.1 * 36 / 700);top:calc(var(--lw) * 0.33 - var(--lw) * 1.1 * 676 / 700);will-change:transform;overflow:visible;pointer-events:none}
 .arm .boom{transform-box:view-box;transform-origin:1400px -380px;will-change:transform;transform:rotate(48deg)}
 .arm .bucket{transform-box:view-box;transform-origin:150px 520px}
 .slogo .pc{transform-box:fill-box;transform-origin:50% 50%;will-change:transform,opacity}
@@ -666,12 +666,12 @@ else{
     const svg=slogo,els=[];
     const add=el=>{el.classList.add('pc');svg.appendChild(el);els.push(el);return el};
     $('#sChev').style.display='none';
-    ['M6 22 L115 5','M115 5 L224 22'].forEach(d=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','#1F4FE0');p.setAttribute('stroke-width','5');p.setAttribute('stroke-linecap','square');add(p)});
+    ['M6 22 L60.5 13.5','M60.5 13.5 L115 5','M115 5 L169.5 13.5','M169.5 13.5 L224 22'].forEach(d=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','#1F4FE0');p.setAttribute('stroke-width','5');p.setAttribute('stroke-linecap','square');add(p)});
     const src=$('#sText'),n=src.getNumberOfChars(),txt=src.textContent;
     for(let i=0;i<n;i++){const ex=src.getExtentOfChar(i),t=document.createElementNS(NS,'text');t.textContent=txt[i];t.setAttribute('x',ex.x);t.setAttribute('y',42);t.setAttribute('fill','#0B1220');t.setAttribute('font-family','Archivo, Arial Black, sans-serif');t.setAttribute('font-weight','900');t.setAttribute('font-size','25');t.setAttribute('style','font-stretch:125%');add(t);t.setAttribute('textLength',ex.width);t.setAttribute('lengthAdjust','spacingAndGlyphs')}
     src.style.display='none';
-    ['#sA','#sB'].forEach(q=>{const r=$(q).cloneNode();r.removeAttribute('id');r.removeAttribute('class');$(q).style.display='none';add(r)});
-    {const sub=$('#sSub'),c=sub.cloneNode(true);c.removeAttribute('id');c.removeAttribute('class');c.style.letterSpacing='5.2px';sub.style.display='none';add(c)}
+    ['#sA','#sB'].forEach(q=>{const o=$(q),x=+o.getAttribute('x'),w=+o.getAttribute('width');[0,1].forEach(h=>{const r=o.cloneNode();r.removeAttribute('id');r.removeAttribute('class');r.setAttribute('x',x+h*w/2);r.setAttribute('width',w/2-1);add(r)});o.style.display='none'});
+    {const sub=$('#sSub'),tx=sub.textContent;for(let i=0;i<tx.length;i++){const p=sub.getStartPositionOfChar(i),t=document.createElementNS(NS,'text');t.textContent=tx[i];t.setAttribute('x',p.x);t.setAttribute('y',60);t.setAttribute('fill','#5A6476');t.setAttribute('font-family','IBM Plex Mono, monospace');t.setAttribute('font-size','8.5');add(t)}sub.style.display='none'}
     const R=rig.getBoundingClientRect();
     return els.map(el=>{const r=el.getBoundingClientRect();return{el,l:r.left-R.left,t:r.top-R.top,r:r.right-R.left,b:r.bottom-R.top,x:0,y:0,vx:0,vy:0,rot:0,vr:0,sc:1,op:1,st:'rest',jit:Math.random()}});
   }
@@ -688,7 +688,7 @@ else{
     await last.finished; if(done)return;
     const P=shatter();
     const R=rig.getBoundingClientRect(),lw=R.width,unit=230/lw,ground=lw*.33,dw=lw*.5;
-    const startX=-(R.left+dw+40),endX=lw*1.0-dw;
+    const startX=-(R.left+dw+40),endX=lw*.86-dw;
     // 2. bulldozer drives in, runs the logo over, pushes the rubble, backs out
     const drive=an(dozer,[
       {transform:`translateX(${startX}px)`,easing:'cubic-bezier(.3,.3,.45,1)'},

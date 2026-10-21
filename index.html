@@ -203,14 +203,15 @@ textarea{min-height:110px;resize:vertical}
 .splash{position:fixed;inset:0;z-index:100;place-items:center;background:var(--paper);overflow:hidden;will-change:transform;box-shadow:0 40px 80px -30px rgba(11,18,32,.35);cursor:pointer}
 .splash::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--sapphire) 0 50%,var(--turf) 50% 100%)}
 .rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
-.slogo{position:relative;z-index:0;display:block;width:100%;height:auto;overflow:visible;transform-origin:0 0;will-change:transform}
+.slogo{position:relative;z-index:1;display:block;width:100%;height:auto;overflow:visible;transform-origin:0 0;will-change:transform}
 .slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
-.arm{position:absolute;z-index:2;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) * .92 - var(--lw) * 1.1 * 36 / 700);top:calc(var(--lw) * 0.33 - var(--lw) * 1.1 * 676 / 700);will-change:transform;overflow:visible;pointer-events:none}
+.arm{position:absolute;z-index:2;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) * 115 / 230 - var(--lw) * 1.1 * 150 / 700);top:calc(var(--lw) * 5 / 230 - var(--lw) * 1.1 * 641 / 700);will-change:transform;overflow:visible;pointer-events:none}
 .arm .boom{transform-box:view-box;transform-origin:1400px -380px;will-change:transform;transform:rotate(48deg)}
-.arm .bucket{transform-box:view-box;transform-origin:150px 520px}
+.arm.back{z-index:0}
+.arm .claw{transform-box:view-box;transform-origin:150px 520px}
+.arm .jawL{transform-box:view-box;transform-origin:140px 552px;transform:rotate(32deg)}
+.arm .jawR{transform-box:view-box;transform-origin:160px 552px;transform:rotate(-32deg)}
 .slogo .pc{transform-box:fill-box;transform-origin:50% 50%;will-change:transform,opacity}
-.dozer{position:absolute;left:0;top:calc(var(--lw) * 0.33 - var(--lw) * 0.25);width:calc(var(--lw) * 0.5);height:auto;z-index:3;overflow:visible;transform:translateX(-300vw);will-change:transform;pointer-events:none}
-.dozer .wh{transform-box:fill-box;transform-origin:50% 50%}
 .chip{position:absolute;left:0;top:0;width:6px;height:6px;z-index:1;pointer-events:none;will-change:transform,opacity}
 .skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
@@ -237,62 +238,41 @@ textarea{min-height:110px;resize:vertical}
       <rect x="8" y="47" width="104" height="3" fill="#1F4FE0"/><rect x="118" y="47" width="104" height="3" fill="#2E9E55"/>
       <text x="115" y="60" text-anchor="middle" fill="#5A6476" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="5.2">LANDSCAPING</text>
     </symbol></svg>
-    <svg class="dozer" id="dozer" viewBox="0 0 320 160" aria-hidden="true">
-      <path d="M12 112 L30 112 L30 150 L20 160 L16 160 Z" fill="#2A3549"/>
-      <rect x="30" y="110" width="200" height="48" rx="24" fill="#0B1220"/>
-      <rect id="track" x="32" y="112" width="196" height="44" rx="22" fill="none" stroke="#3A475F" stroke-width="4" stroke-dasharray="7 5"/>
-      <circle class="wh" cx="56" cy="134" r="17" fill="#2A3549"/><path class="wh" d="M56 120 L56 148 M42 134 L70 134" stroke="#8E96A3" stroke-width="3"/>
-      <circle class="wh" cx="204" cy="134" r="15" fill="#2A3549"/><path class="wh" d="M204 122 L204 146 M192 134 L216 134" stroke="#8E96A3" stroke-width="3"/>
-      <circle cx="96" cy="144" r="8" fill="#2A3549"/><circle cx="130" cy="144" r="8" fill="#2A3549"/><circle cx="164" cy="144" r="8" fill="#2A3549"/>
-      <rect x="40" y="96" width="196" height="16" fill="#1B2333"/>
-      <path d="M118 60 L230 66 L236 96 L118 96 Z" fill="#1B2333"/>
-      <rect x="118" y="80" width="118" height="6" fill="#1F4FE0"/>
-      <rect x="196" y="34" width="8" height="30" fill="#2A3549"/><rect x="194" y="30" width="12" height="5" fill="#0B1220"/>
-      <path d="M44 20 L116 20 L120 96 L40 96 Z" fill="#1B2333"/>
-      <rect x="36" y="12" width="90" height="9" rx="2" fill="#0B1220"/>
-      <path d="M54 30 L108 30 L110 66 L52 66 Z" fill="#9FB6E8" opacity=".35"/>
-      <line x1="80" y1="30" x2="80" y2="66" stroke="#1B2333" stroke-width="3"/>
-      <line x1="150" y1="126" x2="268" y2="126" stroke="#0B1220" stroke-width="12" stroke-linecap="round"/>
-      <line x1="210" y1="76" x2="270" y2="98" stroke="#1F4FE0" stroke-width="8" stroke-linecap="round"/>
-      <line x1="240" y1="87" x2="270" y2="98" stroke="#D3D8DF" stroke-width="4" stroke-linecap="round"/>
-      <path d="M266 32 L292 32 Q274 96 298 150 L318 158 L266 158 Z" fill="#0B1220"/>
-      <path d="M298 150 L318 158" stroke="#8E96A3" stroke-width="4" stroke-linecap="round"/>
-      <path d="M270 40 L286 40 Q272 96 292 146" fill="none" stroke="#2A3549" stroke-width="3"/>
+    <svg class="arm back" viewBox="0 0 700 700" aria-hidden="true">
+      <g class="boom">
+        <g class="claw">
+          <g class="jawL" id="jawL">
+            <path d="M136 546 C88 572 84 646 140 676 L152 664 C112 640 114 584 148 560 Z" fill="#1B2333"/>
+            <path d="M136 546 C88 572 84 646 140 676" fill="none" stroke="#2E3A50" stroke-width="5"/>
+            <path d="M140 676 L158 674 L152 664 Z" fill="#AEB5BF"/>
+            <path d="M104 600 L94 604 M102 626 L92 632" stroke="#3A475F" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="140" cy="552" r="7" fill="#2A3549"/><circle cx="140" cy="552" r="2.5" fill="#D3D8DF"/>
+          </g>
+        </g>
+      </g>
     </svg>
-    <svg class="arm" viewBox="0 0 700 700">
+    <svg class="arm" viewBox="0 0 700 700" aria-hidden="true">
       <g class="boom" id="boom">
         <path d="M330 250 Q470 70 780 -80 L1400 -380" fill="none" stroke="#0B1220" stroke-width="50" stroke-linecap="round"/>
         <path d="M352 236 Q480 80 770 -60 L1390 -360" fill="none" stroke="#1C2638" stroke-width="10" stroke-linecap="round"/>
         <line x1="430" y1="232" x2="640" y2="70" stroke="#1F4FE0" stroke-width="16" stroke-linecap="round"/>
         <line x1="430" y1="232" x2="520" y2="163" stroke="#C9CED6" stroke-width="7" stroke-linecap="round"/>
         <path d="M330 250 L150 520" fill="none" stroke="#0B1220" stroke-width="34" stroke-linecap="round"/>
-        <!-- bucket cylinder, rod and linkage -->
-        <line x1="338" y1="214" x2="244" y2="392" stroke="#1F4FE0" stroke-width="15" stroke-linecap="round"/>
-        <line x1="244" y1="392" x2="150" y2="474" stroke="#D3D8DF" stroke-width="7" stroke-linecap="round"/>
-        <line x1="190" y1="462" x2="150" y2="474" stroke="#0B1220" stroke-width="12" stroke-linecap="round"/>
-        <circle cx="190" cy="462" r="7" fill="#2A3549"/><circle cx="150" cy="474" r="8" fill="#2A3549"/><circle cx="150" cy="474" r="3" fill="#D3D8DF"/>
+        <line x1="338" y1="214" x2="232" y2="404" stroke="#1F4FE0" stroke-width="15" stroke-linecap="round"/>
+        <line x1="232" y1="404" x2="176" y2="500" stroke="#D3D8DF" stroke-width="7" stroke-linecap="round"/>
+        <path d="M300 270 Q250 380 186 470" fill="none" stroke="#2A3549" stroke-width="4"/>
         <circle cx="330" cy="250" r="15" fill="#2A3549"/><circle cx="330" cy="250" r="6" fill="#C9CED6"/>
-        <g class="bucket" id="bucket">
-          <line x1="150" y1="474" x2="124" y2="505" stroke="#0B1220" stroke-width="11" stroke-linecap="round"/>
-          <!-- side plate: curved back, wear strips, cutting lip -->
-          <path d="M116 494 L176 504 C202 548 194 610 146 640 C116 658 82 664 56 656 L66 632 C88 604 100 560 116 494 Z" fill="#1B2333"/>
-          <path d="M176 504 C202 548 194 610 146 640 C116 658 82 664 56 656" fill="none" stroke="#2E3A50" stroke-width="6"/>
-          <path d="M168 556 L180 562 M166 586 L178 594 M150 614 L160 624" stroke="#3A475F" stroke-width="4" stroke-linecap="round"/>
-          <path d="M66 632 C88 604 100 560 116 494" fill="none" stroke="#3A475F" stroke-width="5"/>
-          <!-- mounting ears -->
-          <path d="M112 488 L166 486 L178 508 L118 512 Z" fill="#2A3549"/>
-          <circle cx="150" cy="520" r="11" fill="#2A3549"/><circle cx="150" cy="520" r="4" fill="#D3D8DF"/>
-          <circle cx="124" cy="505" r="8" fill="#2A3549"/><circle cx="124" cy="505" r="3" fill="#D3D8DF"/>
-          <circle id="bmk" cx="112" cy="592" r="1" fill="none"/>
-          <!-- lifting eye on the back of the bucket -->
-          <path d="M126 640 L152 632 L156 648 L134 654 Z" fill="#2A3549"/>
-          <circle cx="140" cy="656" r="8" fill="none" stroke="#8E96A3" stroke-width="4"/>
-          <circle id="lug" cx="140" cy="664" r="1" fill="none"/>
-          <!-- tooth adapters and tips -->
-          <path d="M70 640 L50 652 L44 646 L60 628 Z" fill="#6F7885"/>
-          <path d="M50 652 L30 664 L28 658 L44 646 Z" fill="#AEB5BF"/>
-          <path d="M62 656 L44 670 L40 664 L56 652 Z" fill="#59626F"/>
-          <path d="M44 670 L28 680 L26 674 L40 664 Z" fill="#8E96A3"/>
+        <g class="claw" id="claw">
+          <rect x="128" y="508" width="44" height="40" rx="6" fill="#2A3549"/>
+          <rect x="128" y="522" width="44" height="6" fill="#1F4FE0"/>
+          <circle cx="150" cy="520" r="10" fill="#1B2333"/><circle cx="150" cy="520" r="4" fill="#D3D8DF"/>
+          <g class="jawR" id="jawR">
+            <path d="M164 546 C212 572 216 646 160 676 L148 664 C188 640 186 584 152 560 Z" fill="#0B1220"/>
+            <path d="M164 546 C212 572 216 646 160 676" fill="none" stroke="#2A3549" stroke-width="5"/>
+            <path d="M160 676 L142 674 L148 664 Z" fill="#C9CED6"/>
+            <path d="M196 600 L206 604 M198 626 L208 632" stroke="#3A475F" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="160" cy="552" r="7" fill="#2A3549"/><circle cx="160" cy="552" r="2.5" fill="#D3D8DF"/>
+          </g>
         </g>
       </g>
     </svg>
@@ -655,93 +635,39 @@ else{
   const S=/slowintro/.test(location.search)?6:1;
   const an=(el,kf,o)=>{o=Object.assign({fill:'both'},o);if(o.duration)o.duration*=S;if(o.delay)o.delay*=S;const x=el.animate(kf,o);A.push(x);return x};
   const wait=ms=>new Promise(r=>setTimeout(r,ms*S));
-  const slogo=document.querySelector('.slogo'),boom=$('#boom'),bucket=$('#bucket'),rig=$('#rig'),dozer=$('#dozer'),bmk=$('#bmk'),NS='http://www.w3.org/2000/svg';
-  let revealed=false,done=false,phys=false;
+  const slogo=document.querySelector('.slogo'),rig=$('#rig'),chev=$('#sChev');
+  const booms=[...document.querySelectorAll('.arm .boom')],claws=[...document.querySelectorAll('.arm .claw')];
+  let revealed=false,done=false;
   const reveal=()=>{if(revealed)return;revealed=true;root.classList.remove('splashing');startTurf()};
-  const lift=(ms)=>{const x=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{duration:ms,easing:'cubic-bezier(.6,0,.25,1)'});setTimeout(reveal,60);x.finished.then(()=>{phys=false;splash.remove()}).catch(()=>{});return x};
+  const lift=(ms)=>{const x=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{duration:ms,easing:'cubic-bezier(.62,0,.22,1)'});setTimeout(reveal,60);x.finished.then(()=>splash.remove()).catch(()=>{});return x};
   splash.addEventListener('click',()=>{if(done)return;done=true;A.forEach(x=>{try{x.pause()}catch(e){}});lift(380)});
-
-  /* swap the wordmark for identical loose pieces */
-  function shatter(){
-    const svg=slogo,els=[];
-    const add=el=>{el.classList.add('pc');svg.appendChild(el);els.push(el);return el};
-    $('#sChev').style.display='none';
-    ['M6 22 L60.5 13.5','M60.5 13.5 L115 5','M115 5 L169.5 13.5','M169.5 13.5 L224 22'].forEach(d=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','#1F4FE0');p.setAttribute('stroke-width','5');p.setAttribute('stroke-linecap','square');add(p)});
-    const src=$('#sText'),n=src.getNumberOfChars(),txt=src.textContent;
-    for(let i=0;i<n;i++){const ex=src.getExtentOfChar(i),t=document.createElementNS(NS,'text');t.textContent=txt[i];t.setAttribute('x',ex.x);t.setAttribute('y',42);t.setAttribute('fill','#0B1220');t.setAttribute('font-family','Archivo, Arial Black, sans-serif');t.setAttribute('font-weight','900');t.setAttribute('font-size','25');t.setAttribute('style','font-stretch:125%');add(t);t.setAttribute('textLength',ex.width);t.setAttribute('lengthAdjust','spacingAndGlyphs')}
-    src.style.display='none';
-    ['#sA','#sB'].forEach(q=>{const o=$(q),x=+o.getAttribute('x'),w=+o.getAttribute('width');[0,1].forEach(h=>{const r=o.cloneNode();r.removeAttribute('id');r.removeAttribute('class');r.setAttribute('x',x+h*w/2);r.setAttribute('width',w/2-1);add(r)});o.style.display='none'});
-    {const sub=$('#sSub'),tx=sub.textContent;for(let i=0;i<tx.length;i++){const p=sub.getStartPositionOfChar(i),t=document.createElementNS(NS,'text');t.textContent=tx[i];t.setAttribute('x',p.x);t.setAttribute('y',60);t.setAttribute('fill','#5A6476');t.setAttribute('font-family','IBM Plex Mono, monospace');t.setAttribute('font-size','8.5');add(t)}sub.style.display='none'}
-    const R=rig.getBoundingClientRect();
-    return els.map(el=>{const r=el.getBoundingClientRect();return{el,l:r.left-R.left,t:r.top-R.top,r:r.right-R.left,b:r.bottom-R.top,x:0,y:0,vx:0,vy:0,rot:0,vr:0,sc:1,op:1,st:'rest',jit:Math.random()}});
-  }
-  const chips=[];
-  function chip(x,y,vx,vy){const d=document.createElement('div');d.className='chip';d.style.background=Math.random()<.5?'#8A6A48':'#5E4530';rig.appendChild(d);chips.push({el:d,x,y,vx,vy,t:0})}
+  // roofline pinch: the peak is squeezed up between the jaws
+  const P0=[[6,22],[104,6.7],[115,5],[126,6.7],[224,22]],P1=[[6,22],[108.5,8.2],[115,1.6],[121.5,8.2],[224,22]];
+  const setChev=e=>chev.setAttribute('d',P0.map((p,i)=>(i?'L':'M')+(p[0]+(P1[i][0]-p[0])*e).toFixed(2)+' '+(p[1]+(P1[i][1]-p[1])*e).toFixed(2)).join(' '));
   (async()=>{
     // 1. logo draws in
-    const chev=$('#sChev'),L=chev.getTotalLength();chev.style.strokeDasharray=L;
-    an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:420,easing:'cubic-bezier(.65,0,.35,1)'});
-    an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:90,duration:400,easing:E});
-    an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:220,duration:340,easing:E});
-    an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:250,duration:340,easing:E});
-    const last=an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:290,duration:360,easing:E});
-    await last.finished; if(done)return;
-    const P=shatter();
-    const R=rig.getBoundingClientRect(),lw=R.width,unit=230/lw,ground=lw*.33,dw=lw*.5;
-    const startX=-(R.left+dw+40),endX=lw*.86-dw;
-    // 2. bulldozer drives in, runs the logo over, pushes the rubble, backs out
-    const drive=an(dozer,[
-      {transform:`translateX(${startX}px)`,easing:'cubic-bezier(.3,.3,.45,1)'},
-      {transform:`translateX(${endX}px)`,offset:.56,easing:'linear'},
-      {transform:`translateX(${endX}px)`,offset:.62,easing:'cubic-bezier(.55,0,.85,.4)'},
-      {transform:`translateX(${startX}px)`}
-    ],{duration:1250});
-    const wheels=[...dozer.querySelectorAll('.wh')],track=$('#track'),wr=lw*.5*16/320;
-    let prevF=null,lastT=performance.now(),G=2400,stopped=false;
-    phys=true;
-    (function step(t){
-      if(!phys)return;
-      const dt=Math.min(.033,(t-lastT)/1000)/S;lastT=t;
-      const RR=rig.getBoundingClientRect(),dr=dozer.getBoundingClientRect();
-      const front=dr.right-RR.left,tx=dr.left-RR.left;
-      const dv=prevF===null?0:(front-prevF)/Math.max(dt,.0002);prevF=front;
-      wheels.forEach(w=>w.style.transform=`rotate(${(tx/wr*57.3).toFixed(1)}deg)`);track.style.strokeDashoffset=(-tx*320/dw).toFixed(1);
-      for(const p of P){
-        if(p.st==='rest'){
-          if(p.l<front&&dr.right>RR.left){p.st='loose';p.vx=Math.max(dv,120)+p.jit*80;p.vy=-(90+p.jit*200);p.vr=(p.jit-.25)*360;
-            for(let k=0;k<3;k++)chip((p.l+p.r)/2,ground-4,p.vx*(.3+Math.random()*.5),-(120+Math.random()*260))}
-          else if(stopped){p.st='loose';p.vx=40+p.jit*90;p.vy=-60;p.vr=200+p.jit*300}
-        }else if(p.st==='loose'){
-          p.vy+=G*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.rot+=p.vr*dt;
-          if(p.b+p.y>ground){p.y=ground-p.b;p.vy*=-.22;p.vx*=.8;p.vr*=.7;if(Math.abs(p.vy)<50)p.vy=0}
-          const wall=front+p.jit*lw*.13;
-          if(dv>1&&p.l+p.x<wall){p.x=wall-p.l;p.vx=Math.max(p.vx,dv)}
-          if(dv>1)p.vx=Math.min(p.vx,dv+90);
-        }else if(p.st==='collect'){
-          p.k=Math.min(1,p.k+dt/.34);const e=p.k*p.k*(3-2*p.k);
-          const m=bmk.getBoundingClientRect(),mx=m.left-RR.left,my=m.top-RR.top;
-          const cx=(p.l+p.r)/2,cy=(p.t+p.b)/2;
-          p.x=p.sx+(mx-cx-p.sx)*e;p.y=p.sy+(my-cy-p.sy)*e-Math.sin(e*Math.PI)*lw*.08;p.sc=1-.6*e;p.op=e>.7?1-(e-.7)/.3:1;p.rot+=p.vr*dt*.4;
-        }
-        if(p.st!=='rest')p.el.style.transform=`translate(${(p.x*unit).toFixed(2)}px,${(p.y*unit).toFixed(2)}px) rotate(${p.rot.toFixed(1)}deg) scale(${p.sc.toFixed(3)})`;
-        p.el.style.opacity=p.op.toFixed(3);
-      }
-      for(const c of chips){c.t+=dt;c.vy+=G*dt;c.x+=c.vx*dt;c.y+=c.vy*dt;if(c.y>ground-3){c.y=ground-3;c.vy=0;c.vx*=.85}c.el.style.transform=`translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px)`;c.el.style.opacity=Math.max(0,1-c.t*.9).toFixed(3)}
-      requestAnimationFrame(step);
-    })(lastT);
-    await wait(1250*.56); stopped=true; if(done)return;
-    // 3. as the dozer backs out, the excavator swings down from the top corner onto the pile
-    await wait(1250*.06); if(done)return;
-    const swing=an(boom,[{transform:'rotate(48deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{duration:560,easing:'cubic-bezier(.45,0,.2,1)'});
-    an(bucket,[{transform:'rotate(-20deg)'},{transform:'rotate(0deg)'}],{duration:560,easing:'cubic-bezier(.45,0,.2,1)'});
+    const L=chev.getTotalLength();chev.style.strokeDasharray=L;
+    const d1=an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:440,easing:'cubic-bezier(.65,0,.35,1)'});
+    an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:100,duration:420,easing:E});
+    an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:230,duration:360,easing:E});
+    an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:260,duration:360,easing:E});
+    an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:300,duration:380,easing:E});
+    d1.finished.then(()=>{chev.style.strokeDasharray='none'}).catch(()=>{});
+    // 2. excavator swings in from the top corner with the claw open
+    let swing;
+    booms.forEach(b=>{swing=an(b,[{transform:'rotate(48deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{delay:380,duration:700,easing:'cubic-bezier(.45,0,.2,1)'})});
+    claws.forEach(c=>an(c,[{transform:'rotate(-16deg)'},{transform:'rotate(3deg)',offset:.8},{transform:'rotate(0deg)'}],{delay:380,duration:760,easing:'cubic-bezier(.45,0,.2,1)'}));
     await swing.finished; if(done)return;
-    // 4. scoop: the bucket curls and the rubble goes in
-    an(bucket,[{transform:'rotate(0deg)'},{transform:'rotate(72deg)'}],{duration:340,easing:'cubic-bezier(.4,0,.2,1)'});
-    P.forEach((p,i)=>{setTimeout(()=>{p.st='collect';p.k=0;p.sx=p.x;p.sy=p.y},(i%6)*25*S)});
-    chips.forEach(c=>c.el.style.transition='opacity .2s');
-    await wait(300); if(done)return;
-    // 5. one smooth lift: the boom raises the full bucket and the page comes up with it
-    an(boom,[{transform:'rotate(0deg)'},{transform:'rotate(9deg)'}],{duration:900,easing:'cubic-bezier(.55,0,.35,1)'});
+    // 3. jaws clamp shut on the roofline peak; the logo squishes under the grip
+    an($('#jawL'),[{transform:'rotate(32deg)'},{transform:'rotate(-1.5deg)'}],{duration:230,easing:'cubic-bezier(.55,0,.25,1)'});
+    an($('#jawR'),[{transform:'rotate(-32deg)'},{transform:'rotate(1.5deg)'}],{duration:230,easing:'cubic-bezier(.55,0,.25,1)'});
+    await wait(140); if(done)return;
+    const t0=performance.now();(function g(t){const k=Math.min(1,(t-t0)/(170*S));setChev(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(g)})(t0);
+    slogo.style.transformOrigin='50% 100%';
+    an(slogo,[{transform:'scaleY(1)'},{transform:'scaleY(.93) scaleX(1.01)',offset:.45},{transform:'scaleY(.97)'}],{duration:320,easing:'cubic-bezier(.3,0,.2,1)'});
+    await wait(200); if(done)return;
+    // 4. grip and pull: logo, claw and the whole sheet go up together
+    an(rig,[{transform:'translateY(0)'},{transform:'translateY(-12px)'}],{duration:200,easing:'cubic-bezier(.3,0,.2,1)'});
     await wait(110); if(done)return;
     done=true;lift(760);
   })();

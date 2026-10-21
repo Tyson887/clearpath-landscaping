@@ -214,7 +214,7 @@ textarea{min-height:110px;resize:vertical}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 <script>
-(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&sessionStorage.getItem('cpIntro')!=='1'&&Element.prototype.animate)document.documentElement.classList.add('splashing')}catch(e){}})();
+(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(sessionStorage.getItem('cpIntro')!=='1'||/slowintro/.test(location.search))&&Element.prototype.animate)document.documentElement.classList.add('splashing')}catch(e){}})();
 </script>
 
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -627,8 +627,9 @@ else{
   splash.classList.add('live');
   try{sessionStorage.setItem('cpIntro','1')}catch(e){}
   const A=[],E='cubic-bezier(.22,.8,.2,1)';
-  const an=(el,kf,o)=>{const x=el.animate(kf,Object.assign({fill:'both'},o));A.push(x);return x};
-  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  const S=/slowintro/.test(location.search)?6:1;
+  const an=(el,kf,o)=>{o=Object.assign({fill:'both'},o);if(o.duration)o.duration*=S;if(o.delay)o.delay*=S;const x=el.animate(kf,o);A.push(x);return x};
+  const wait=ms=>new Promise(r=>setTimeout(r,ms*S));
   const slogo=document.querySelector('.slogo'),arm=document.querySelector('.arm'),bucket=$('#bucket'),rig=$('#rig'),NS='http://www.w3.org/2000/svg';
   let revealed=false,done=false;
   const reveal=()=>{if(revealed)return;revealed=true;root.classList.remove('splashing');startTurf()};
@@ -689,9 +690,9 @@ else{
     const sx0=splash.getBoundingClientRect().top;
     (function step(t){
       if(!phys)return;
-      const dt=Math.min(.033,(t-last_t)/1000);last_t=t;
+      const dt=Math.min(.033,(t-last_t)/1000)/S;last_t=t;
       const br=bucket.getBoundingClientRect();
-      const bv=prev?[(br.left-prev.left)/Math.max(dt,.001),(br.top-prev.top)/Math.max(dt,.001)]:[0,0];prev=br;
+      const bv=prev?[(br.left-prev.left)/Math.max(dt,.0002),(br.top-prev.top)/Math.max(dt,.0002)]:[0,0];prev=br;
       const lift=splash.getBoundingClientRect().top-sx0;
       for(const p of pieces){
         if(!p.hit){

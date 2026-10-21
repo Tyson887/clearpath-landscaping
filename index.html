@@ -653,7 +653,10 @@ else{
   const setChev=e=>chev.setAttribute('d',P0.map((p,i)=>(i?'L':'M')+(p[0]+(P1[i][0]-p[0])*e).toFixed(2)+' '+(p[1]+(P1[i][1]-p[1])*e).toFixed(2)).join(' '));
   (async()=>{
     // 1. wait for the logo fonts so every build looks the same, then draw the logo in
+    // a tab opened in the background waits until it is actually on screen before the show starts
+    if(document.visibilityState!=='visible')await new Promise(r=>{const v=()=>{if(document.visibilityState==='visible'){document.removeEventListener('visibilitychange',v);r()}};document.addEventListener('visibilitychange',v)});
     try{await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,900))])}catch(e){}
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
     if(done)return;
     const L=chev.getTotalLength();chev.style.strokeDasharray=L;
     const d1=an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:800,easing:'cubic-bezier(.65,0,.35,1)'});

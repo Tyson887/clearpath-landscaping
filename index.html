@@ -659,7 +659,7 @@ else{
     };
     split($('#sText'),'#0B1220','Archivo, Arial Black, sans-serif','900','25',42,'font-stretch:125%');
     ['#sA','#sB'].forEach(q=>{const r=$(q).cloneNode();r.removeAttribute('id');r.removeAttribute('class');$(q).style.display='none';add(r)});
-    split($('#sSub'),'#5A6476','IBM Plex Mono, monospace','400','8.5',60,'');
+    {const sub=$('#sSub'),c=sub.cloneNode(true);c.removeAttribute('id');c.removeAttribute('class');c.style.letterSpacing='5.2px';sub.style.display='none';add(c)}
     // remember each piece's resting centre on screen
     pieces.forEach(p=>{const r=p.el.getBoundingClientRect();p.cx=r.left+r.width/2;p.cy=r.top+r.height/2;p.w=r.width});
     return pieces;

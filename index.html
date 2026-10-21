@@ -695,7 +695,7 @@ else{
       {transform:`translateX(${endX}px)`,offset:.56,easing:'linear'},
       {transform:`translateX(${endX}px)`,offset:.62,easing:'cubic-bezier(.55,0,.85,.4)'},
       {transform:`translateX(${startX}px)`}
-    ],{duration:1450});
+    ],{duration:1250});
     const wheels=[...dozer.querySelectorAll('.wh')],track=$('#track'),wr=lw*.5*16/320;
     let prevF=null,lastT=performance.now(),G=2400,stopped=false;
     phys=true;
@@ -729,11 +729,11 @@ else{
       for(const c of chips){c.t+=dt;c.vy+=G*dt;c.x+=c.vx*dt;c.y+=c.vy*dt;if(c.y>ground-3){c.y=ground-3;c.vy=0;c.vx*=.85}c.el.style.transform=`translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px)`;c.el.style.opacity=Math.max(0,1-c.t*.9).toFixed(3)}
       requestAnimationFrame(step);
     })(lastT);
-    await wait(1450*.56); stopped=true; if(done)return;
+    await wait(1250*.56); stopped=true; if(done)return;
     // 3. as the dozer backs out, the excavator swings down from the top corner onto the pile
-    await wait(1450*.06); if(done)return;
-    const swing=an(boom,[{transform:'rotate(48deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
-    an(bucket,[{transform:'rotate(-20deg)'},{transform:'rotate(0deg)'}],{duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
+    await wait(1250*.06); if(done)return;
+    const swing=an(boom,[{transform:'rotate(48deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{duration:560,easing:'cubic-bezier(.45,0,.2,1)'});
+    an(bucket,[{transform:'rotate(-20deg)'},{transform:'rotate(0deg)'}],{duration:560,easing:'cubic-bezier(.45,0,.2,1)'});
     await swing.finished; if(done)return;
     // 4. scoop: the bucket curls and the rubble goes in
     an(bucket,[{transform:'rotate(0deg)'},{transform:'rotate(72deg)'}],{duration:340,easing:'cubic-bezier(.4,0,.2,1)'});

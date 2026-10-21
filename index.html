@@ -108,6 +108,12 @@ p{margin:0}
 .hero-art{background:var(--ash);overflow:hidden}
 .hero-art svg,.art svg{display:block;width:100%;height:auto}
 .art{width:100%;max-width:100%;background:var(--ash);overflow:hidden;aspect-ratio:4/3}
+.art{position:relative}
+.art .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:var(--ash)}
+.art .ex{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(11,18,32,.72);padding:5px 8px}
+.photo-note{font-size:13.5px;color:var(--muted);max-width:60ch;margin-top:8px}
+.credits{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.6;padding-block:0 26px;max-width:90ch}
+.credits a{color:rgba(255,255,255,.75)}
 .walk-art{background:var(--ash);overflow:hidden}
 .walk-art svg{display:block;width:100%;height:auto}
 .cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:12px}
@@ -490,6 +496,7 @@ textarea{min-height:110px;resize:vertical}
     <div class="svc-head">
       <h2 data-r>What<br>we do.</h2>
       <p class="lede" data-r style="--d:.06s">Five services, done properly. Every job starts by digging out what's there and getting the ground perfectly level before anything goes down.</p>
+      <p class="photo-note" data-r style="--d:.1s">Photos marked “Example photo” are licensed stock images that show the style of work we do. They are not photos of ClearPath Landscaping projects.</p>
     </div>
 
     <article class="svc" data-r>
@@ -500,7 +507,7 @@ textarea{min-height:110px;resize:vertical}
         <ul><li>Entertaining areas and whole backyards</li><li>Grass turned into paved surfaces</li><li>Side paths and pool surrounds</li></ul>
         <div class="sizes"><span>Any size</span><span>Any shape</span><span>Any paver</span><span>Built to suit</span></div>
       </div>
-      <div class="art" aria-hidden="true"><div class="slab big" style="aspect-ratio:4/3;height:100%"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+      <div class="art"><div class="slab big" style="aspect-ratio:4/3;height:100%"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><img class="ph" src="https://images.unsplash.com/photo-1719324923613-ff0884b031ed?w=1200&q=75&auto=format&fit=crop" alt="Example of a large-format paved patio with outdoor furniture" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="var t=this.nextElementSibling;if(t)t.remove();this.remove()"><span class="ex">Example photo</span></div>
     </article>
 
     <article class="svc" data-r>
@@ -511,14 +518,14 @@ textarea{min-height:110px;resize:vertical}
         <ul><li>Stepping paths through grass and yards</li><li>Spaced to a comfortable walking stride</li><li>Bedded firm so they never rock or sink</li></ul>
         <div class="sizes"><span>Set flush</span><span>Bedded firm</span><span>Mower friendly</span></div>
       </div>
-      <div class="art" aria-hidden="true"><svg viewBox="0 0 400 300">
+      <div class="art"><svg viewBox="0 0 400 300">
         <rect width="400" height="300" fill="#2E9E55"/>
         <g fill="#3DBA68" opacity=".55"><rect x="0" y="0" width="60" height="300"/><rect x="120" y="0" width="60" height="300"/><rect x="240" y="0" width="60" height="300"/><rect x="360" y="0" width="60" height="300"/></g>
         <g fill="#1F7A3E"><rect x="148" y="22" width="104" height="54"/><rect x="148" y="98" width="104" height="54"/><rect x="148" y="174" width="104" height="54"/><rect x="148" y="250" width="104" height="54"/></g>
         <g fill="#E4E6EA"><rect x="152" y="26" width="96" height="46"/><rect x="152" y="102" width="96" height="46"/><rect x="152" y="178" width="96" height="46"/><rect x="152" y="254" width="96" height="46"/></g>
         <line x1="270" y1="49" x2="270" y2="125" stroke="#FFFFFF" stroke-width="2"/><line x1="264" y1="49" x2="276" y2="49" stroke="#FFFFFF" stroke-width="2"/><line x1="264" y1="125" x2="276" y2="125" stroke="#FFFFFF" stroke-width="2"/>
         <text x="282" y="92" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="2">ONE STRIDE</text>
-      </svg></div>
+      </svg><img class="ph" src="https://images.pexels.com/photos/10772470/pexels-photo-10772470.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Example of natural stepping stones set into a lawn" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="var t=this.nextElementSibling;if(t)t.remove();this.remove()"><span class="ex">Example photo</span></div>
     </article>
 
     <article class="svc" id="walkways" data-r>
@@ -529,7 +536,7 @@ textarea{min-height:110px;resize:vertical}
         <ul><li>Stepping pavers in a pebble bed</li><li>Steel or paver edging both sides</li><li>Straight or curved to suit your yard</li></ul>
         <div class="sizes"><span>Pebble infill</span><span>Steel edging</span><span>Straight or curved</span></div>
       </div>
-      <div class="art" aria-hidden="true"><svg viewBox="0 0 400 300" role="img" aria-label="Evenly curved garden walkway: sandstone stepping stones in a pebble bed with steel edging, lawn and plants either side">
+      <div class="art"><svg viewBox="0 0 400 300" role="img" aria-label="Evenly curved garden walkway: sandstone stepping stones in a pebble bed with steel edging, lawn and plants either side">
 <defs><mask id="wkm"><rect width="400" height="300" fill="#000"/><path d="M-40 236 Q200 10 440 236" fill="none" stroke="#fff" stroke-width="64"/></mask>
 <linearGradient id="wkl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6E0" stop-opacity=".14"/><stop offset="1" stop-color="#0B1220" stop-opacity=".12"/></linearGradient></defs>
 <rect width="400" height="300" fill="#2E9E55"/>
@@ -1670,7 +1677,7 @@ textarea{min-height:110px;resize:vertical}
 <circle cx="284.8" cy="202.3" r="7.8" fill="#1F6B3A"/><circle cx="293.9" cy="202.3" r="7.8" fill="#24783F"/><circle cx="289.3" cy="197.7" r="8.1" fill="#2B8048"/><circle cx="289.3" cy="204.9" r="6.5" fill="#1F6B3A"/><circle cx="286.7" cy="196.4" r="3.6" fill="#4CAF6A" opacity=".7"/>
 <circle cx="331.7" cy="96.2" r="7.8" fill="#1F6B3A"/><circle cx="340.8" cy="96.2" r="7.8" fill="#24783F"/><circle cx="336.3" cy="91.7" r="8.1" fill="#2B8048"/><circle cx="336.3" cy="98.8" r="6.5" fill="#1F6B3A"/><circle cx="333.7" cy="90.4" r="3.6" fill="#4CAF6A" opacity=".7"/>
 <circle cx="342.0" cy="235.2" r="7.8" fill="#1F6B3A"/><circle cx="351.1" cy="235.2" r="7.8" fill="#24783F"/><circle cx="346.5" cy="230.7" r="8.1" fill="#2B8048"/><circle cx="346.5" cy="237.8" r="6.5" fill="#1F6B3A"/><circle cx="343.9" cy="229.4" r="3.6" fill="#4CAF6A" opacity=".7"/>
-<rect width="400" height="300" fill="url(#wkl)"/></svg></div>
+<rect width="400" height="300" fill="url(#wkl)"/></svg><img class="ph" src="https://images.unsplash.com/photo-1761637822930-fb1c1a3df94d?w=1200&q=75&auto=format&fit=crop" alt="Example of a paved garden walkway with a pebble border and clipped hedges" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="var t=this.nextElementSibling;if(t)t.remove();this.remove()"><span class="ex">Example photo</span></div>
     </article>
 
     <article class="svc" data-r>
@@ -1681,7 +1688,7 @@ textarea{min-height:110px;resize:vertical}
         <ul><li>Humps cut down and low spots filled</li><li>Ground graded to drain away from the house</li><li>Turf laid, rolled flat and watered in</li></ul>
         <div class="sizes"><span>Sir Walter</span><span>TifTuf</span><span>Kikuyu</span><span>Zoysia</span></div>
       </div>
-      <div class="art" aria-hidden="true"><svg viewBox="0 0 400 300">
+      <div class="art"><svg viewBox="0 0 400 300">
         <rect x="0" y="0" width="400" height="300" fill="#8A6A48"/>
         <g stroke="#7A5A3C" stroke-width="2" opacity=".6"><line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="110" x2="400" y2="110"/><line x1="0" y1="170" x2="400" y2="170"/><line x1="0" y1="230" x2="400" y2="230"/></g>
         <g fill="#2E9E55" stroke="#1F7A3E" stroke-width="2">
@@ -1693,7 +1700,7 @@ textarea{min-height:110px;resize:vertical}
         <circle cx="330" cy="150" r="26" fill="#2E9E55"/><circle cx="330" cy="150" r="16" fill="none" stroke="#7A5A3C" stroke-width="4"/><circle cx="330" cy="150" r="6" fill="none" stroke="#7A5A3C" stroke-width="3"/>
         <line x1="10" y1="262" x2="390" y2="262" stroke="#1F4FE0" stroke-width="2" stroke-dasharray="8 6"/>
         <text x="10" y="288" fill="#F2F4F7" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="2">LEVELLED · READY FOR TURF</text>
-      </svg></div>
+      </svg><img class="ph" src="https://images.pexels.com/photos/17261493/pexels-photo-17261493.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Example of a dense, even lawn seen from above" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="var t=this.nextElementSibling;if(t)t.remove();this.remove()"><span class="ex">Example photo</span></div>
     </article>
 
     <article class="svc" data-r>
@@ -1704,7 +1711,7 @@ textarea{min-height:110px;resize:vertical}
         <ul><li>Old lawn and soil dug out and removed</li><li>Paved areas and fresh turf together</li><li>Planned around how you use the yard</li></ul>
         <div class="sizes"><span>Excavate</span><span>Level</span><span>Pave</span><span>Turf</span></div>
       </div>
-      <div class="art" aria-hidden="true"><svg viewBox="0 0 400 300" role="img" aria-label="Finished backyard revamp: house, paved patio, stepping stones across fresh lawn, garden bed and tree">
+      <div class="art"><svg viewBox="0 0 400 300" role="img" aria-label="Finished backyard revamp: house, paved patio, stepping stones across fresh lawn, garden bed and tree">
 <defs><linearGradient id="rvl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6E0" stop-opacity=".14"/><stop offset="1" stop-color="#0B1220" stop-opacity=".12"/></linearGradient></defs>
 <rect width="400" height="300" fill="#2E9E55"/>
 <rect x="0" y="118" width="400" height="14" fill="#3DBA68" opacity=".45"/>
@@ -1781,7 +1788,7 @@ textarea{min-height:110px;resize:vertical}
 <rect x="128" y="255" width="48" height="28" rx="4" fill="#000" opacity=".18"/><rect x="126" y="252" width="48" height="28" rx="4" fill="#E4E6EA"/>
 <circle cx="58" cy="232" r="46" fill="#000" opacity=".15"/>
 <circle cx="50" cy="222" r="44" fill="#1F6B3A"/><circle cx="38" cy="210" r="22" fill="#2B8048"/><circle cx="62" cy="236" r="18" fill="#24783F"/><circle cx="34" cy="204" r="9" fill="#4CAF6A" opacity=".7"/>
-<rect width="400" height="300" fill="url(#rvl)"/></svg></div>
+<rect width="400" height="300" fill="url(#rvl)"/></svg><img class="ph" src="https://images.pexels.com/photos/7546775/pexels-photo-7546775.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Example of a finished backyard with a covered patio and manicured lawn" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="var t=this.nextElementSibling;if(t)t.remove();this.remove()"><span class="ex">Example photo</span></div>
     </article>
   </div>
 </section>
@@ -1870,6 +1877,7 @@ textarea{min-height:110px;resize:vertical}
     </div>
   </div>
   <div class="wrap">
+    <p class="credits">About our photos: images marked “Example photo” are stock photos used under the <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash License</a> and <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels License</a> to illustrate styles of work. They are not ClearPath Landscaping projects. Credits: patio by <a href="https://unsplash.com/photos/a-patio-with-a-table-and-chairs-and-an-umbrella-hMnON34Y-yo" target="_blank" rel="noopener">Tile Merchant Ireland</a> and walkway by <a href="https://unsplash.com/photos/modern-garden-pathway-with-stone-wall-and-hedges-taaMG-ioJU8" target="_blank" rel="noopener">@skstrannik</a> on Unsplash; stepping stones by <a href="https://www.pexels.com/photo/green-grass-with-stepping-stone-10772470/" target="_blank" rel="noopener">Nicole Queiroz</a>, lawn by <a href="https://www.pexels.com/photo/top-view-of-grass-17261493/" target="_blank" rel="noopener">thiago japyassu</a> and backyard by <a href="https://www.pexels.com/photo/house-backyard-with-lawn-green-grass-7546775/" target="_blank" rel="noopener">Max Vakhtbovych</a> on Pexels.</p>
     <div class="foot">
       <span>© <span id="yr">2026</span> ClearPath Landscaping · Built From The Ground Up</span>
       <span>Paved patios · Stepping pavers · Yard revamps · Levelling &amp; turf</span>

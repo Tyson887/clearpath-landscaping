@@ -621,8 +621,11 @@ textarea{min-height:110px;resize:vertical}
         </div>
       </div>
       <div class="field"><label for="qMsg">About the job</label><textarea id="qMsg" placeholder="Rough size, what's there now, what you'd like."></textarea></div>
+      <input type="text" id="qBot" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <p class="err" id="qErr" hidden>Add your name, phone and suburb so we can get back to you.</p>
+      <p class="photo-note" style="margin:0">We only use your details to reply to your quote request.</p>
       <button class="btn btn-blue" type="submit" style="justify-self:start">Send request <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <div class="result" id="qOk" hidden role="status"><b>Thanks, your request is in. We'll call or text you back soon.</b></div>
       <div class="result" id="qRes" hidden>
         <b>Your request is ready. Copy it and text it to 0433 717 137.</b>
         <pre id="qText"></pre>
@@ -677,12 +680,23 @@ const $=s=>document.querySelector(s);
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1800)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Select the text to copy it')}}
 $('#copyNum').addEventListener('click',()=>copy('0433 717 137','Number copied'));
-$('#qf').addEventListener('submit',e=>{
+const FORM_KEY='';
+function fallback(n,p,s){const m=$('#qMsg').value.trim();
+  $('#qText').textContent=`Hi ClearPath Landscaping, it's ${n} from ${s}.\nI'm after: ${$('#qService').value}.${m?'\n'+m:''}\nBest number: ${p}`;
+  $('#qRes').hidden=false}
+$('#qf').addEventListener('submit',async e=>{
   e.preventDefault();const n=$('#qName').value.trim(),p=$('#qPhone').value.trim(),s=$('#qSuburb').value.trim();
   if(!n||!p||!s){$('#qErr').hidden=false;return}$('#qErr').hidden=true;
-  const m=$('#qMsg').value.trim();
-  $('#qText').textContent=`Hi ClearPath Landscaping, it's ${n} from ${s}.\nI'm after: ${$('#qService').value}.${m?'\n'+m:''}\nBest number: ${p}`;
-  $('#qRes').hidden=false;
+  if($('#qBot').value)return;
+  $('#qOk').hidden=true;$('#qRes').hidden=true;
+  if(!FORM_KEY){fallback(n,p,s);return}
+  const btn=$('#qf button[type=submit]');btn.disabled=true;const label=btn.firstChild.textContent;btn.firstChild.textContent='Sending… ';
+  try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:FORM_KEY,subject:'New quote request: '+$('#qService').value+' ('+s+')',from_name:'ClearPath Landscaping website',name:n,phone:p,suburb:s,service:$('#qService').value,message:$('#qMsg').value.trim()||'(no details given)',botcheck:''})});
+    const j=await r.json();
+    if(j.success){$('#qOk').hidden=false;$('#qf').reset()}else throw new Error('fail');
+  }catch(_){fallback(n,p,s);toast('Could not send. Copy it and text us instead')}
+  btn.disabled=false;btn.firstChild.textContent=label;
 });
 $('#qCopy').addEventListener('click',()=>copy($('#qText').textContent,'Request copied'));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px 12% 0px'});

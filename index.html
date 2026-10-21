@@ -196,6 +196,34 @@ textarea{min-height:110px;resize:vertical}
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);opacity:0;background:var(--ink);color:#fff;font-weight:700;font-size:14px;padding:12px 18px;z-index:80;transition:opacity .25s,transform .3s var(--ease);pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+
+/* phone layout */
+@media (max-width:640px){
+  .band{padding-block:64px}
+  .nav-in{height:66px}
+  .logo{width:138px}
+  .phone-link{font-size:15px}
+  .hero{padding-block:36px 0}
+  .hero-grid{gap:22px}
+  .lede{font-size:16.5px}
+  .actions{flex-direction:column;align-items:stretch}
+  .actions .btn{width:100%}
+  .stripes{margin-top:34px}
+  .hero-art svg{height:230px}
+  .cap{font-size:10.5px;letter-spacing:.08em}
+  .facts div{padding:20px 12px 20px 0}
+  .facts b{font-size:16px}
+  .facts span{font-size:13.5px}
+  .svc{padding-block:36px;gap:18px}
+  .svc-head{margin-bottom:36px}
+  .steps li::before{font-size:44px}
+  .big-phone{font-size:40px}
+  .faq summary{font-size:17px;padding:20px 0}
+  .final h2{font-size:48px}
+  .callbar{transform:translateY(110%);transition:transform .35s var(--ease)}
+  .callbar.show{transform:none}
+  .foot{flex-direction:column;align-items:flex-start;gap:10px}
+}
 .js [data-r].in{animation:fade .8s var(--ease) both;animation-delay:var(--d,0s)}
 
 /* intro: logo, excavator lifts the sheet away */
@@ -353,7 +381,7 @@ textarea{min-height:110px;resize:vertical}
         <rect x="40" y="96" width="8" height="158" fill="#0B1220"/>
         <rect x="1152" y="96" width="8" height="158" fill="#0B1220"/>
         <line x1="48" y1="112" x2="1152" y2="112" stroke="#1F4FE0" stroke-width="2"/>
-        <text x="600" y="98" text-anchor="middle" fill="#1F4FE0" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3">STRING LINE · LEVEL ±0MM</text>
+        <text x="900" y="98" text-anchor="middle" fill="#1F4FE0" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3">STRING LINE · LEVEL ±0MM</text>
         <!-- ground -->
         <rect x="0" y="254" width="1200" height="126" fill="url(#hSoil)"/>
         <rect x="0" y="276" width="1200" height="104" fill="url(#hGrit)"/>
@@ -390,8 +418,8 @@ textarea{min-height:110px;resize:vertical}
           <circle cx="1035" cy="158" r="24" fill="none" stroke="#7A5A3C" stroke-width="5"/><circle cx="1035" cy="158" r="12" fill="none" stroke="#7A5A3C" stroke-width="4"/>
         </g>
         <!-- labels -->
-        <text x="40" y="322" fill="#F2F4F7" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3">LEVELLED &amp; COMPACTED GROUND</text>
-        <text x="40" y="346" fill="#D9C6AE" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="3">FRESH UNDERLAY · GRADED TO DRAIN</text>
+        <text x="1160" y="322" text-anchor="end" fill="#F2F4F7" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3">LEVELLED &amp; COMPACTED GROUND</text>
+        <text x="1160" y="346" text-anchor="end" fill="#D9C6AE" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="3">FRESH UNDERLAY · GRADED TO DRAIN</text>
       </svg>
     </div>
     <div class="cap"><span>New turf on dead-level ground</span><span>Hills District · All of Sydney</span></div>
@@ -2154,7 +2182,10 @@ $('#qf').addEventListener('submit',e=>{
 $('#qCopy').addEventListener('click',()=>copy($('#qText').textContent,'Request copied'));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px 12% 0px'});
 document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
-const nav=$('#nav');addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>20),{passive:true});
+const nav=$('#nav'),cbar=document.querySelector('.callbar');addEventListener('scroll',()=>{nav.classList.toggle('solid',scrollY>20);if(cbar)cbar.classList.toggle('show',scrollY>420)},{passive:true});
+const heroSvg=document.querySelector('.hero-art svg');
+function fitHero(){if(heroSvg)heroSvg.setAttribute('preserveAspectRatio',innerWidth<=640?'xMaxYMax slice':'xMidYMid meet')}
+fitHero();addEventListener('resize',fitHero);
 $('#yr').textContent=new Date().getFullYear();
 
 /* paver rail */

@@ -655,34 +655,34 @@ else{
     // 1. wait for the logo fonts so every build looks the same, then draw the logo in
     // a tab opened in the background waits until it is actually on screen before the show starts
     if(document.visibilityState!=='visible')await new Promise(r=>{const v=()=>{if(document.visibilityState==='visible'){document.removeEventListener('visibilitychange',v);r()}};document.addEventListener('visibilitychange',v)});
-    try{await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,900))])}catch(e){}
+    try{await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,600))])}catch(e){}
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
     if(done)return;
     const L=chev.getTotalLength();chev.style.strokeDasharray=L;
-    const d1=an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:800,easing:'cubic-bezier(.65,0,.35,1)'});
-    an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:250,duration:750,easing:E});
-    an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:550,duration:600,easing:E});
-    an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:620,duration:600,easing:E});
-    an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:700,duration:800,easing:E});
+    const d1=an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:500,easing:'cubic-bezier(.65,0,.35,1)'});
+    an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:150,duration:450,easing:E});
+    an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:320,duration:380,easing:E});
+    an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:360,duration:380,easing:E});
+    an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:420,duration:470,easing:E});
     slogo.classList.add('go');
     d1.finished.then(()=>{chev.style.strokeDasharray='none'}).catch(()=>{});
     // 2. excavator swings in from the top corner with the claw open
     let swing;
-    booms.forEach(b=>{swing=an(b,[{transform:'rotate(48deg)'},{transform:'rotate(-.5deg)',offset:.88},{transform:'rotate(0deg)'}],{delay:1450,duration:440,easing:'cubic-bezier(.5,0,.15,1)'})});
-    claws.forEach(c=>an(c,[{transform:'rotate(-16deg)'},{transform:'rotate(3deg)',offset:.8},{transform:'rotate(0deg)'}],{delay:1450,duration:500,easing:'cubic-bezier(.5,0,.15,1)'}));
+    booms.forEach(b=>{swing=an(b,[{transform:'rotate(48deg)'},{transform:'rotate(-.5deg)',offset:.88},{transform:'rotate(0deg)'}],{delay:860,duration:400,easing:'cubic-bezier(.5,0,.15,1)'})});
+    claws.forEach(c=>an(c,[{transform:'rotate(-16deg)'},{transform:'rotate(3deg)',offset:.8},{transform:'rotate(0deg)'}],{delay:860,duration:450,easing:'cubic-bezier(.5,0,.15,1)'}));
     await swing.finished; if(done)return;
     // 3. jaws clamp shut on the roofline peak; the logo squishes under the grip
-    an($('#jawL'),[{transform:'rotate(32deg)'},{transform:'rotate(-1.5deg)'}],{duration:170,easing:'cubic-bezier(.55,0,.25,1)'});
-    an($('#jawR'),[{transform:'rotate(-32deg)'},{transform:'rotate(1.5deg)'}],{duration:170,easing:'cubic-bezier(.55,0,.25,1)'});
-    await wait(100); if(done)return;
+    an($('#jawL'),[{transform:'rotate(32deg)'},{transform:'rotate(-1.5deg)'}],{duration:150,easing:'cubic-bezier(.55,0,.25,1)'});
+    an($('#jawR'),[{transform:'rotate(-32deg)'},{transform:'rotate(1.5deg)'}],{duration:150,easing:'cubic-bezier(.55,0,.25,1)'});
+    await wait(80); if(done)return;
     const t0=performance.now();(function g(t){const k=Math.min(1,(t-t0)/(170*S));setChev(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(g)})(t0);
     slogo.style.transformOrigin='50% 100%';
     an(slogo,[{transform:'scaleY(1)'},{transform:'scaleY(.93) scaleX(1.01)',offset:.45},{transform:'scaleY(.97)'}],{duration:320,easing:'cubic-bezier(.3,0,.2,1)'});
-    await wait(150); if(done)return;
+    await wait(110); if(done)return;
     // 4. grip and pull: logo, claw and the whole sheet go up together
-    an(rig,[{transform:'translateY(0)'},{transform:'translateY(-12px)'}],{duration:160,easing:'cubic-bezier(.3,0,.2,1)'});
-    await wait(80); if(done)return;
-    done=true;lift(720);
+    an(rig,[{transform:'translateY(0)'},{transform:'translateY(-12px)'}],{duration:140,easing:'cubic-bezier(.3,0,.2,1)'});
+    await wait(60); if(done)return;
+    done=true;lift(640);
   })();
 }
 })();

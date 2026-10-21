@@ -205,7 +205,7 @@ textarea{min-height:110px;resize:vertical}
 .rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
 .slogo{display:block;width:100%;height:auto;overflow:visible}
 .slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
-.arm{position:absolute;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) / 2 - var(--lw) * 1.1 * 60 / 700);top:calc(var(--lw) * 6 / 230 - var(--lw) * 1.1 * 646 / 700);overflow:visible;pointer-events:none}
+.arm{position:absolute;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) / 2 - var(--lw) * 1.1 * 48 / 700);top:calc(var(--lw) * 6 / 230 - var(--lw) * 1.1 * 660 / 700);overflow:visible;pointer-events:none}
 .arm .boom{transform-box:view-box;transform-origin:760px -60px;will-change:transform}
 .arm .bucket{transform-box:view-box;transform-origin:150px 520px}
 .skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
@@ -234,14 +234,28 @@ textarea{min-height:110px;resize:vertical}
         <line x1="430" y1="232" x2="640" y2="70" stroke="#1F4FE0" stroke-width="16" stroke-linecap="round"/>
         <line x1="430" y1="232" x2="520" y2="163" stroke="#C9CED6" stroke-width="7" stroke-linecap="round"/>
         <path d="M330 250 L150 520" fill="none" stroke="#0B1220" stroke-width="34" stroke-linecap="round"/>
-        <line x1="210" y1="470" x2="350" y2="200" stroke="#1F4FE0" stroke-width="12" stroke-linecap="round"/>
-        <line x1="210" y1="470" x2="262" y2="370" stroke="#C9CED6" stroke-width="5" stroke-linecap="round"/>
+        <!-- bucket cylinder, rod and linkage -->
+        <line x1="338" y1="214" x2="244" y2="392" stroke="#1F4FE0" stroke-width="15" stroke-linecap="round"/>
+        <line x1="244" y1="392" x2="150" y2="474" stroke="#D3D8DF" stroke-width="7" stroke-linecap="round"/>
+        <line x1="190" y1="462" x2="150" y2="474" stroke="#0B1220" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="190" cy="462" r="7" fill="#2A3549"/><circle cx="150" cy="474" r="8" fill="#2A3549"/><circle cx="150" cy="474" r="3" fill="#D3D8DF"/>
         <circle cx="330" cy="250" r="15" fill="#2A3549"/><circle cx="330" cy="250" r="6" fill="#C9CED6"/>
         <g class="bucket" id="bucket">
-          <path d="M150 520 L176 552 Q160 612 92 642 L60 646 L40 616 Q34 560 96 520 Z" fill="#0B1220"/>
-          <path d="M60 646 L44 662 L52 638 Z M76 643 L64 662 L70 640 Z M92 640 L84 658 L88 638 Z" fill="#0B1220"/>
-          <path d="M70 620 Q110 600 150 556" fill="none" stroke="#2A3549" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="150" cy="520" r="11" fill="#2A3549"/><circle cx="150" cy="520" r="4" fill="#C9CED6"/>
+          <line x1="150" y1="474" x2="124" y2="505" stroke="#0B1220" stroke-width="11" stroke-linecap="round"/>
+          <!-- side plate: curved back, wear strips, cutting lip -->
+          <path d="M116 494 L176 504 C202 548 194 610 146 640 C116 658 82 664 56 656 L66 632 C88 604 100 560 116 494 Z" fill="#1B2333"/>
+          <path d="M176 504 C202 548 194 610 146 640 C116 658 82 664 56 656" fill="none" stroke="#2E3A50" stroke-width="6"/>
+          <path d="M184 560 L196 566 M182 590 L194 598 M168 620 L178 630" stroke="#3A475F" stroke-width="4" stroke-linecap="round"/>
+          <path d="M66 632 C88 604 100 560 116 494" fill="none" stroke="#3A475F" stroke-width="5"/>
+          <!-- mounting ears -->
+          <path d="M112 488 L166 486 L178 508 L118 512 Z" fill="#2A3549"/>
+          <circle cx="150" cy="520" r="11" fill="#2A3549"/><circle cx="150" cy="520" r="4" fill="#D3D8DF"/>
+          <circle cx="124" cy="505" r="8" fill="#2A3549"/><circle cx="124" cy="505" r="3" fill="#D3D8DF"/>
+          <!-- tooth adapters and tips -->
+          <path d="M70 640 L50 652 L44 646 L60 628 Z" fill="#6F7885"/>
+          <path d="M50 652 L30 664 L28 658 L44 646 Z" fill="#AEB5BF"/>
+          <path d="M62 656 L44 670 L40 664 L56 652 Z" fill="#59626F"/>
+          <path d="M44 670 L28 680 L26 674 L40 664 Z" fill="#8E96A3"/>
         </g>
       </g>
     </svg>
@@ -570,7 +584,7 @@ function loop(ts){
   if(intro&&intro.t0===null){requestAnimationFrame(loop);return}
   if(intro){
     const k=Math.min(1,(ts-intro.t0)/intro.dur);
-    const e=k<.5?16*k*k*k*k*k:1-Math.pow(-2*k+2,5)/2; // quint in-out: long, soft landing
+    const e=1-Math.pow(1-k,4); // quart out: quick start, long soft landing
     setPose(40+(t.cx-40)*e,64+(t.rad-64)*e);
     if(k>=1)intro=null;
     requestAnimationFrame(loop);return;
@@ -591,8 +605,7 @@ updRail();
 function startTurf(){
   if(reduce){const t=target();draw(t.cx,t.rad,0);return}
   pose.cx=40;pose.rad=64;pose.rot=-1080;draw(40,64,-1080);
-  intro={t0:null,dur:2600};
-  setTimeout(()=>{if(intro)intro.t0=performance.now();looping=true;requestAnimationFrame(loop)},250);
+  intro={t0:performance.now(),dur:1900};looping=true;requestAnimationFrame(loop);
 }
 
 /* ---------- opening sequence ---------- */
@@ -604,21 +617,21 @@ else{
   const A=[],E='cubic-bezier(.22,.8,.2,1)';
   const an=(el,kf,o)=>{const x=el.animate(kf,Object.assign({fill:'both'},o));A.push(x);return x};
   const chev=$('#sChev'),L=chev.getTotalLength();chev.style.strokeDasharray=L;
-  an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:800,easing:'cubic-bezier(.65,0,.35,1)'});
-  an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:250,duration:750,easing:E});
-  an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:550,duration:600,easing:E});
-  an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:620,duration:600,easing:E});
-  an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:700,duration:800,easing:E});
+  an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:480,easing:'cubic-bezier(.65,0,.35,1)'});
+  an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:120,duration:450,easing:E});
+  an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:260,duration:380,easing:E});
+  an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:300,duration:380,easing:E});
+  an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:340,duration:420,easing:E});
   // excavator swings in from the top, bucket settles onto the roofline
-  an($('#boom'),[{transform:'rotate(50deg)'},{transform:'rotate(-1.2deg)',offset:.82},{transform:'rotate(0deg)'}],{delay:1050,duration:1150,easing:'cubic-bezier(.45,0,.25,1)'});
-  an($('#bucket'),[{transform:'rotate(28deg)'},{transform:'rotate(0deg)',offset:.7},{transform:'rotate(-12deg)'}],{delay:1050,duration:1500,easing:'cubic-bezier(.45,0,.25,1)'});
+  an($('#boom'),[{transform:'rotate(50deg)'},{transform:'rotate(-1deg)',offset:.85},{transform:'rotate(0deg)'}],{delay:420,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
+  an($('#bucket'),[{transform:'rotate(16deg)'},{transform:'rotate(0deg)',offset:.72},{transform:'rotate(-8deg)'}],{delay:420,duration:820,easing:'cubic-bezier(.45,0,.2,1)'});
   // grip: logo lifts a touch as the bucket curls
-  an($('#rig'),[{transform:'translateY(0)'},{transform:'translateY(-8px)'}],{delay:2300,duration:350,easing:'cubic-bezier(.3,0,.2,1)'});
+  an($('#rig'),[{transform:'translateY(0)'},{transform:'translateY(-8px)'}],{delay:1080,duration:180,easing:'cubic-bezier(.3,0,.2,1)'});
   // the whole sheet is lifted away, revealing the site
-  const lift=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{delay:2600,duration:1100,easing:'cubic-bezier(.7,0,.22,1)'});
+  const lift=an(splash,[{transform:'translateY(0)'},{transform:'translateY(-112%)'}],{delay:1220,duration:720,easing:'cubic-bezier(.7,0,.22,1)'});
   let revealed=false;
   const reveal=()=>{if(revealed)return;revealed=true;root.classList.remove('splashing');startTurf()};
-  const t=setTimeout(reveal,2900);
+  const t=setTimeout(reveal,1260);
   lift.finished.then(()=>{reveal();splash.remove()}).catch(()=>{});
   splash.addEventListener('click',()=>{clearTimeout(t);A.forEach(x=>{try{x.finish()}catch(e){}})});
 }

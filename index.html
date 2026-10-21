@@ -640,8 +640,8 @@ else{
     an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:280,duration:360,easing:E});
     an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:320,duration:400,easing:E});
     // 2. excavator swings in below the logo, bucket curling up into a cup
-    const swing=an(boom,[{transform:'rotate(26deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{delay:380,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
-    an(bucket,[{transform:'rotate(-10deg)'},{transform:'rotate(60deg)'}],{delay:380,duration:620,easing:'cubic-bezier(.45,0,.2,1)'});
+    const swing=an(boom,[{transform:'rotate(48deg)'},{transform:'rotate(-.6deg)',offset:.86},{transform:'rotate(0deg)'}],{delay:380,duration:680,easing:'cubic-bezier(.45,0,.2,1)'});
+    an(bucket,[{transform:'rotate(-10deg)'},{transform:'rotate(60deg)'}],{delay:380,duration:680,easing:'cubic-bezier(.45,0,.2,1)'});
     await swing.finished; if(done)return;
     // 3. logo shrinks and drops into the bucket
     const fr=slogo.getBoundingClientRect(),to=payload.getBoundingClientRect();

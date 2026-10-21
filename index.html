@@ -229,7 +229,8 @@ textarea{min-height:110px;resize:vertical}
 .m-eyebrow{display:none}
 @media (max-width:640px){
   h2{font-size:44px;line-height:.92}
-  .m-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:var(--ash);padding:8px 12px;margin-bottom:14px;animation:fade .7s var(--ease) both}
+  .hero{overflow-x:clip}
+  .m-eyebrow{justify-self:start;max-width:100%;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:var(--ash);padding:8px 12px;margin-bottom:14px;animation:fade .7s var(--ease) both}
   .m-eyebrow i{width:8px;height:8px;background:var(--turf);display:block}
   .hero-grid>div:first-child,.hero-grid{min-width:0}
   .hero h1{font-size:13vw;line-height:.9;letter-spacing:-.03em}
@@ -407,7 +408,7 @@ textarea{min-height:110px;resize:vertical}
 <section class="hero">
   <div class="wrap">
     <div class="hero-grid">
-      <div class="m-eyebrow"><i></i>Sydney-wide · Free on-site quotes</div>
+      <div class="m-eyebrow"><i></i>Sydney-wide · Free quotes</div>
       <h1>
         <span class="ln"><span>Paving.</span></span>
         <span class="ln"><span>Patios.</span></span>

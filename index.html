@@ -691,7 +691,7 @@ else{
     const startX=-(R.left+dw+40),endX=lw*1.0-dw;
     // 2. bulldozer drives in, runs the logo over, pushes the rubble, backs out
     const drive=an(dozer,[
-      {transform:`translateX(${startX}px)`,easing:'cubic-bezier(.3,.55,.4,1)'},
+      {transform:`translateX(${startX}px)`,easing:'cubic-bezier(.3,.3,.45,1)'},
       {transform:`translateX(${endX}px)`,offset:.56,easing:'linear'},
       {transform:`translateX(${endX}px)`,offset:.62,easing:'cubic-bezier(.55,0,.85,.4)'},
       {transform:`translateX(${startX}px)`}
@@ -708,7 +708,7 @@ else{
       wheels.forEach(w=>w.style.transform=`rotate(${(tx/wr*57.3).toFixed(1)}deg)`);track.style.strokeDashoffset=(-tx*320/dw).toFixed(1);
       for(const p of P){
         if(p.st==='rest'){
-          if(p.l<front&&dr.right>RR.left){p.st='loose';p.vx=Math.max(dv,240)*(1+p.jit*.5);p.vy=-(160+p.jit*360);p.vr=(p.jit-.3)*700;
+          if(p.l<front&&dr.right>RR.left){p.st='loose';p.vx=Math.max(dv,120)+p.jit*80;p.vy=-(90+p.jit*200);p.vr=(p.jit-.25)*360;
             for(let k=0;k<3;k++)chip((p.l+p.r)/2,ground-4,p.vx*(.3+Math.random()*.5),-(120+Math.random()*260))}
           else if(stopped){p.st='loose';p.vx=40+p.jit*90;p.vy=-60;p.vr=200+p.jit*300}
         }else if(p.st==='loose'){
@@ -716,6 +716,7 @@ else{
           if(p.b+p.y>ground){p.y=ground-p.b;p.vy*=-.22;p.vx*=.8;p.vr*=.7;if(Math.abs(p.vy)<50)p.vy=0}
           const wall=front+p.jit*lw*.13;
           if(dv>1&&p.l+p.x<wall){p.x=wall-p.l;p.vx=Math.max(p.vx,dv)}
+          if(dv>1)p.vx=Math.min(p.vx,dv+90);
         }else if(p.st==='collect'){
           p.k=Math.min(1,p.k+dt/.34);const e=p.k*p.k*(3-2*p.k);
           const m=bmk.getBoundingClientRect(),mx=m.left-RR.left,my=m.top-RR.top;

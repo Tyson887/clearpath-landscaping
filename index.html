@@ -204,6 +204,8 @@ textarea{min-height:110px;resize:vertical}
 .splash::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--sapphire) 0 50%,var(--turf) 50% 100%)}
 .rig{--lw:min(520px,76vw);position:relative;width:var(--lw);will-change:transform}
 .slogo{position:relative;z-index:1;display:block;width:100%;height:auto;overflow:visible;transform-origin:0 0;will-change:transform}
+.splash .slogo{visibility:hidden}
+.splash .slogo.go{visibility:visible}
 .slogo .t,.slogo .s,.slogo .sub{transform-box:fill-box;transform-origin:50% 50%}
 .arm{position:absolute;z-index:2;width:calc(var(--lw) * 1.1);height:auto;left:calc(var(--lw) * 115 / 230 - var(--lw) * 1.1 * 150 / 700);top:calc(var(--lw) * 5 / 230 - var(--lw) * 1.1 * 641 / 700);will-change:transform;overflow:visible;pointer-events:none}
 .arm .boom{transform-box:view-box;transform-origin:1400px -380px;will-change:transform;transform:rotate(48deg)}
@@ -217,7 +219,7 @@ textarea{min-height:110px;resize:vertical}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 <script>
-(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(sessionStorage.getItem('cpIntro')!=='1'||/slowintro/.test(location.search))&&Element.prototype.animate)document.documentElement.classList.add('splashing')}catch(e){}})();
+(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&Element.prototype.animate)document.documentElement.classList.add('splashing')}catch(e){}})();
 </script>
 
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -630,7 +632,6 @@ const root=document.documentElement,splash=$('#splash');
 if(!root.classList.contains('splashing')){splash.remove();startTurf();}
 else{
   splash.classList.add('live');
-  try{sessionStorage.setItem('cpIntro','1')}catch(e){}
   const A=[],E='cubic-bezier(.22,.8,.2,1)';
   const S=/slowintro/.test(location.search)?6:1;
   const an=(el,kf,o)=>{o=Object.assign({fill:'both'},o);if(o.duration)o.duration*=S;if(o.delay)o.delay*=S;const x=el.animate(kf,o);A.push(x);return x};
@@ -645,13 +646,16 @@ else{
   const P0=[[6,22],[104,6.7],[115,5],[126,6.7],[224,22]],P1=[[6,22],[108.5,8.2],[115,1.6],[121.5,8.2],[224,22]];
   const setChev=e=>chev.setAttribute('d',P0.map((p,i)=>(i?'L':'M')+(p[0]+(P1[i][0]-p[0])*e).toFixed(2)+' '+(p[1]+(P1[i][1]-p[1])*e).toFixed(2)).join(' '));
   (async()=>{
-    // 1. logo draws in
+    // 1. wait for the logo fonts so every build looks the same, then draw the logo in
+    try{await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,900))])}catch(e){}
+    if(done)return;
     const L=chev.getTotalLength();chev.style.strokeDasharray=L;
     const d1=an(chev,[{strokeDashoffset:L},{strokeDashoffset:0}],{duration:800,easing:'cubic-bezier(.65,0,.35,1)'});
     an($('#sText'),[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{delay:250,duration:750,easing:E});
     an($('#sA'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:550,duration:600,easing:E});
     an($('#sB'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:620,duration:600,easing:E});
     an($('#sSub'),[{opacity:0,letterSpacing:'9px'},{opacity:1,letterSpacing:'5.2px'}],{delay:700,duration:800,easing:E});
+    slogo.classList.add('go');
     d1.finished.then(()=>{chev.style.strokeDasharray='none'}).catch(()=>{});
     // 2. excavator swings in from the top corner with the claw open
     let swing;

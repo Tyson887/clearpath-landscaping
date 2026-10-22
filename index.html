@@ -121,13 +121,6 @@ p{margin:0}
 .art.live::after{animation:shine 1.5s .5s cubic-bezier(.4,0,.2,1) 1 both}
 @keyframes shine{to{transform:translateX(120%)}}
 @media (prefers-reduced-motion:reduce){.art{transform:none!important}.js .art .ph{opacity:1;clip-path:none;transform:none!important;transition:none}.art::before,.art::after{display:none}}
-.cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(22px,3vw,44px)}
-.cs{display:grid;gap:18px;align-content:start;min-width:0}
-.cs-t{display:grid;gap:12px;min-width:0}
-.cs-t p{color:var(--muted);font-size:clamp(17px,1.4vw,19px);line-height:1.55}
-.soon{justify-self:start;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sapphire);border:1.5px solid var(--sapphire);padding:4px 9px}
-
-@media (max-width:560px){.cs-grid{grid-template-columns:1fr}.cs-t p{font-size:17px}}
 .art .ex{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(11,18,32,.72);padding:5px 8px}
 .photo-note{font-size:15.5px;line-height:1.55;color:var(--muted);max-width:60ch;margin-top:8px}
 .credits{font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.6;padding-block:0 26px;max-width:90ch}
@@ -585,34 +578,6 @@ textarea{min-height:110px;resize:vertical}
   </div>
 </section>
 
-<section class="band" id="coming-soon" style="background:var(--ash)">
-  <div class="wrap">
-    <div class="svc-head">
-      <h2 data-r>Coming<br>soon.</h2>
-      <p class="lede" data-r style="--d:.06s">Larger structural landscaping works are on the way. They are not available yet.</p>
-      <p class="photo-note" data-r style="--d:.1s">ClearPath Landscaping currently takes on work valued at $5,000 or less (labour and materials, GST included). We are not offering or quoting the works below yet. Photos are licensed stock images that show the style of work, not ClearPath projects.</p>
-    </div>
-    <div class="cs-grid">
-      <article class="cs" data-r>
-        <div class="art"><img class="ph" src="https://images.pexels.com/photos/33966133/pexels-photo-33966133.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Example photo of a stepped retaining wall with planting" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"><span class="ex">Example photo</span></div>
-        <div class="cs-t"><span class="soon">Coming soon</span><h3>Retaining walls</h3><p>Stepped and tiered walls in block or stone that hold back a slope and make level, usable ground.</p></div>
-      </article>
-      <article class="cs" data-r>
-        <div class="art"><img class="ph" src="https://images.pexels.com/photos/33017851/pexels-photo-33017851.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Example photo of a timber deck in a garden" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"><span class="ex">Example photo</span></div>
-        <div class="cs-t"><span class="soon">Coming soon</span><h3>Timber decks</h3><p>Clean hardwood decks and steps that connect the house to the yard.</p></div>
-      </article>
-      <article class="cs" data-r>
-        <div class="art"><img class="ph" src="https://images.pexels.com/photos/7587884/pexels-photo-7587884.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Example photo of a modern pergola over a paved area" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"><span class="ex">Example photo</span></div>
-        <div class="cs-t"><span class="soon">Coming soon</span><h3>Pergolas</h3><p>Timber or steel pergolas that give an outdoor area shade and structure.</p></div>
-      </article>
-      <article class="cs" data-r>
-        <div class="art"><img class="ph" src="https://images.pexels.com/photos/8134845/pexels-photo-8134845.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Example photo of a paver driveway at a modern home" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"><span class="ex">Example photo</span></div>
-        <div class="cs-t"><span class="soon">Coming soon</span><h3>Driveways</h3><p>Paver driveways and entries with tidy edging and the right fall for drainage.</p></div>
-      </article>
-    </div>
-  </div>
-</section>
-
 <section class="band" id="process">
   <div class="wrap">
     <h2 data-r>How it works.</h2>
@@ -693,7 +658,7 @@ textarea{min-height:110px;resize:vertical}
     </div>
   </div>
   <div class="wrap">
-    <p class="credits">About our images: pictures marked “Concept image” are computer-generated illustrations of the styles of work we do. They are not photographs of ClearPath Landscaping projects, and finished results will vary with each site, material and budget. Stock photos in the Coming soon section are used under the <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels License</a>: retaining wall by <a href="https://www.pexels.com/photo/33966133/" target="_blank" rel="noopener">Elien</a>, deck by <a href="https://www.pexels.com/photo/33017851/" target="_blank" rel="noopener">Marion Batteur</a>, pergola and driveway by <a href="https://www.pexels.com/photo/7587884/" target="_blank" rel="noopener">Max Vakhtbovych</a>.</p>
+    <p class="credits">About our images: pictures marked “Concept image” are computer-generated illustrations of the styles of work we do. They are not photographs of ClearPath Landscaping projects, and finished results will vary with each site, material and budget.</p>
     <div class="foot">
       <span>© <span id="yr">2026</span> ClearPath Landscaping · Built From The Ground Up</span>
       <span>Paved patios · Stepping pavers · Yard revamps · Levelling &amp; turf</span>
